@@ -95,7 +95,11 @@ export const QuestionnaireFlow = () => {
     setStep(2);
     setSelectedResponse(null);
   };
-
+  const goBack = () => {
+    if (step > 1) {
+      setStep((step - 1) as Step);
+    }
+  };
   return (
     <div className="flex flex-col items-center gap-8 max-w-2xl mx-auto p-6 relative">
       <h2 className="text-3xl font-bold text-gray-800 mb-2">Questionnaire</h2>
@@ -103,7 +107,8 @@ export const QuestionnaireFlow = () => {
       {step >= 2 && (
         <div className="flex justify-between absolute top-6 left-6 right-6">
           <Button
-            onClick={() => setStep(step.valueOf() - 1)}
+            // Then use it:
+            onClick={goBack}
             variant="ghost"
             className="text-gray-600 hover:text-gray-800 p-2"
           >
