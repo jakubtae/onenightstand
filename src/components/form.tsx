@@ -42,7 +42,7 @@ const responses: Response[] = [
   },
   {
     option: 3,
-    question: "I don&apos;t feel like doing anything",
+    question: "I don't feel like doing anything",
     text: "[Name], apathy happens even to the most accomplished. Winston Churchill faced periods of deep lethargy but discovered that taking action first, even if small, lifts momentum. Today, pick one tiny task — even just making your bed — and do it. Action triggers motivation, not the other way around.",
     fixes: [
       "Start with one tiny task (make bed, wash dishes, open a notebook)",
@@ -52,7 +52,7 @@ const responses: Response[] = [
   },
   {
     option: 4,
-    question: "I can&apos;t get out of my head",
+    question: "I can't get out of my head",
     text: "[Name], overthinking can feel like a trap. Isaac Newton famously described his intense bouts of rumination, yet breakthroughs often came when he shifted focus to small experiments or observations. Try this: write down everything on your mind for 5 minutes, then pick one action to actually do. Clarity grows from movement, not rumination.",
     fixes: [
       "Write down your thoughts (brain dump / journal for 5–10 min)",
@@ -62,7 +62,7 @@ const responses: Response[] = [
   },
   {
     option: 5,
-    question: "I don&apos;t know what to do next",
+    question: "I don't know what to do next",
     text: "[Name], uncertainty is normal when life feels directionless. Even explorers like Magellan faced the unknown daily. The trick is to choose one small step forward, no matter how minor — a short walk, a call, or a tiny goal for the day. Momentum comes from starting, not from knowing the whole path.",
     fixes: [
       "Identify one small priority for today — take that first step",
