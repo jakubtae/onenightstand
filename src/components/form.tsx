@@ -10,7 +10,9 @@ import {
   Document,
   StyleSheet,
   PDFDownloadLink,
+  Link,
 } from "@react-pdf/renderer";
+import { PDFViewer } from "@react-pdf/renderer";
 
 interface Response {
   option: number;
@@ -93,6 +95,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#1F2937",
     marginBottom: 5,
+    textTransform: "capitalize",
   },
   subtitle: {
     fontSize: 16,
@@ -272,7 +275,10 @@ const ComebackPlanPDF = ({
 
       <Text style={styles.footer}>
         Generated on {new Date().toLocaleDateString()} • This plan is
-        personalized for {name} • Remember: Progress, not perfection
+        personalized for {name} • Remember: Progress, not perfection •
+        <Link href="https://onenightstand-peach.vercel.app/">
+          Visit my website
+        </Link>
       </Text>
     </Page>
   </Document>
@@ -312,13 +318,12 @@ export const QuestionnaireFlow = () => {
       setStep((step - 1) as Step);
     }
   };
-
   return (
-    <div className="flex flex-col items-center gap-8 max-w-2xl mx-auto p-6 relative">
+    <div className="flex flex-col items-center justify-center gap-2 max-w-2xl mx-auto p-6 relative">
       <h2 className="text-3xl font-bold text-gray-800 mb-2">Questionnaire</h2>
 
       {step >= 2 && (
-        <div className="flex justify-between absolute top-6 left-6 right-6">
+        <div className="flex justify-between absolute top-6 left-[-6px]">
           <Button
             onClick={goBack}
             variant="ghost"
@@ -343,7 +348,7 @@ export const QuestionnaireFlow = () => {
               <label className="block text-lg font-semibold text-gray-700">
                 1. What&apos;s your name?
               </label>
-              <div className="flex flex-row gap-3">
+              <div className="flex flex-row gap-3 justify-between items-center">
                 <input
                   className="border border-gray-300 p-3 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   value={name}
@@ -353,7 +358,7 @@ export const QuestionnaireFlow = () => {
                   placeholder="Enter your name"
                 />
                 <Button
-                  className="flex px-6 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium disabled:bg-gray-400 disabled:cursor-not-allowed"
+                  className="flex h-full px-6 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium disabled:bg-gray-400 disabled:cursor-not-allowed"
                   onClick={handleNameNext}
                   disabled={!name.trim()}
                 >
@@ -467,57 +472,67 @@ export const QuestionnaireFlow = () => {
             exit={{ opacity: 0, x: -100 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="w-full p-6 border border-gray-200 rounded-lg bg-gray-50 space-y-4">
-              <h3 className="text-xl font-semibold text-gray-800">
-                {name}&apos;s Comeback Plan
-              </h3>
-              <p className="text-gray-600 font-semibold leading-relaxed">
-                Your personalized roadmap is ready!
-                <br />
-                Print it, stick to it, and start your comeback journey today.
-              </p>
-
-              <div className="mt-6 p-4 bg-white rounded-lg border">
-                <h4 className="font-semibold text-gray-800 mb-2">
-                  What&apos;s included:
-                </h4>
-                <ul className="text-sm text-gray-600 space-y-1">
-                  <li>• Personalized action steps based on your challenge</li>
-                  <li>• 7-day implementation timeline</li>
-                  <li>• Key success principles</li>
-                  <li>• Daily reflection questions</li>
-                </ul>
-              </div>
-
-              <Button
-                className="w-full py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium mt-4"
-                asChild
-              >
-                <PDFDownloadLink
-                  document={
-                    <ComebackPlanPDF
-                      name={name}
-                      selectedResponse={selectedResponse}
-                    />
-                  }
-                  fileName={`${name}-comeback-plan.pdf`}
-                  className="w-full flex justify-center items-center"
+            <div className="flex flex-col md:flex-row gap-2">
+              <div className="w-full p-6 border border-gray-200 rounded-lg bg-gray-50 space-y-4">
+                <h3 className="text-xl font-semibold text-gray-800">
+                  {name}&apos;s Comeback Plan
+                </h3>
+                <p className="text-gray-600 font-semibold leading-relaxed">
+                  Your personalized roadmap is ready!
+                  <br />
+                  Print it, stick to it, and start your comeback journey today.
+                </p>
+                <div className="mt-6 p-4 bg-white rounded-lg border">
+                  <h4 className="font-semibold text-gray-800 mb-2">
+                    What&apos;s included:
+                  </h4>
+                  <ul className="text-sm text-gray-600 space-y-1">
+                    <li>• Personalized action steps based on your challenge</li>
+                    <li>• 7-day implementation timeline</li>
+                    <li>• Key success principles</li>
+                    <li>• Daily reflection questions</li>
+                  </ul>
+                </div>
+                <Button
+                  className="w-full py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium mt-4"
+                  asChild
                 >
-                  {({ loading }) =>
-                    loading
-                      ? "Generating PDF..."
-                      : "Download Your Comeback Plan"
-                  }
-                </PDFDownloadLink>
-              </Button>
-
-              <Button
-                variant="outline"
-                onClick={() => setStep(2)}
-                className="w-full py-3 rounded-lg border-gray-300 text-gray-700 mt-2"
-              >
-                Create Another Plan
-              </Button>
+                  <PDFDownloadLink
+                    document={
+                      <ComebackPlanPDF
+                        name={name}
+                        selectedResponse={selectedResponse}
+                      />
+                    }
+                    fileName={`${name}-comeback-plan.pdf`}
+                    className="w-full flex justify-center items-center"
+                  >
+                    {({ loading }) =>
+                      loading
+                        ? "Generating PDF..."
+                        : "Download Your Comeback Plan"
+                    }
+                  </PDFDownloadLink>
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => setStep(2)}
+                  className="w-full py-3 rounded-lg border-gray-300 text-gray-700 mt-2"
+                >
+                  Create Another Plan
+                </Button>
+              </div>
+              <div>
+                <PDFViewer
+                  className="aspect-[210/297] w-full"
+                  showToolbar={false}
+                >
+                  <ComebackPlanPDF
+                    name={name}
+                    selectedResponse={selectedResponse}
+                  />
+                </PDFViewer>
+              </div>
             </div>
           </motion.div>
         )}
