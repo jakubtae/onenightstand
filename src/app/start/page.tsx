@@ -1,4 +1,4 @@
-import { QuestionnaireFlow } from "@/components/QuestionareFlow";
+import { QuestionnaireFlow } from "@/components/QuestionnaireFlow";
 
 export default function Home() {
   return (

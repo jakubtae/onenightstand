@@ -7,6 +7,8 @@ import {
   Link,
 } from "@react-pdf/renderer";
 import { Response } from "./response";
+import { QuestionnaireData } from "../components/QuestionnaireFlow";
+
 const styles = StyleSheet.create({
   page: {
     flexDirection: "column",
@@ -121,11 +123,9 @@ const habitColors = ["#3B82F6", "#F59E42", "#10B981", "#EF4444", "#6366F1"]; // 
 
 // PDF Document Component
 export const ComebackPlanPDF = ({
-  name,
-  selectedResponse,
+  QuestionnaireData: { name, selectedResponse, headline, tone },
 }: {
-  name: string;
-  selectedResponse: Response;
+  QuestionnaireData: QuestionnaireData;
 }) => (
   <Document>
     <Page size="A4" style={styles.page}>
@@ -141,21 +141,24 @@ export const ComebackPlanPDF = ({
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Your Current Challenge</Text>
         <Text style={styles.problemStatement}>
-          &quot;{selectedResponse.question}&quot;
+          &quot;{selectedResponse ? selectedResponse.question : ""}&quot;
         </Text>
         <Text style={{ fontSize: 12, color: "#6B7280", lineHeight: 1.5 }}>
-          {selectedResponse.text.replace("[Name]", name)}
+          {selectedResponse
+            ? selectedResponse.text.replace("[Name]", name)
+            : ""}
         </Text>
       </View>
 
       {/* Quick Fixes */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Immediate Action Steps</Text>
-        {selectedResponse.fixes.map((fix, index) => (
-          <Text key={index} style={styles.fixItem}>
-            • {fix}
-          </Text>
-        ))}
+        {selectedResponse &&
+          selectedResponse.fixes.map((fix, index) => (
+            <Text key={index} style={styles.fixItem}>
+              • {fix}
+            </Text>
+          ))}
       </View>
 
       {/* 7-Day Comeback Timeline */}

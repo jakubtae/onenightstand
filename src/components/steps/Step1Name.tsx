@@ -10,7 +10,7 @@ import {
 } from "../ui/form";
 import { UseFormReturn } from "react-hook-form";
 import { Input } from "../ui/input";
-import { NameFormData } from "../QuestionareFlow";
+import { NameFormData } from "../QuestionnaireFlow";
 interface Step1NameProps {
   form: UseFormReturn<NameFormData>;
   onSubmit: (data: NameFormData) => void;
