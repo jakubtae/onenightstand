@@ -6,7 +6,6 @@ import {
   StyleSheet,
   Link,
 } from "@react-pdf/renderer";
-import { Response } from "./response";
 import { QuestionnaireData } from "../components/QuestionnaireFlow";
 
 const styles = StyleSheet.create({
@@ -119,7 +118,7 @@ const styles = StyleSheet.create({
 });
 
 const HabitsNumber = 3; // Change this to set number of habits
-const habitColors = ["#3B82F6", "#F59E42", "#10B981", "#EF4444", "#6366F1"]; // Example colors
+// const habitColors = ["#3B82F6", "#F59E42", "#10B981", "#EF4444", "#6366F1"]; // Example colors
 
 // PDF Document Component
 export const ComebackPlanPDF = ({

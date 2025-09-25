@@ -38,7 +38,7 @@ export const Step5Plan = ({ questionnaireData, onRestart }: Step5PlanProps) => {
               Your Plan Includes:
             </h4>
             <ul className="text-sm text-gray-600 space-y-1">
-              <li>• Personalized headline: "{headline}"</li>
+              <li>• Personalized headline: &quot;{headline}&quot;</li>
               <li>• {tone} coaching approach</li>
               <li>• Action steps for: {selectedResponse.question}</li>
               <li>• 7-day implementation timeline</li>

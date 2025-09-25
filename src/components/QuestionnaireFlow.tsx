@@ -84,10 +84,6 @@ export const QuestionnaireFlow = () => {
     setStep(4);
   };
 
-  const handleViewFixes = (): void => {
-    setStep(4);
-  };
-
   const handlePlanNext = (): void => {
     setStep(5);
   };

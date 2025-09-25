@@ -45,7 +45,7 @@ export const Step4Fixes = ({
               <strong>Challenge:</strong> {selectedResponse.question}
             </p>
             <p>
-              <strong>Headline:</strong> "{headline}"
+              <strong>Headline:</strong> &quot;{headline}&quot;
             </p>
             <p>
               <strong>Tone:</strong> {tone}

@@ -30,8 +30,6 @@ interface Step3ResponseProps {
 
 export const Step3Response = ({
   form,
-  name,
-  selectedResponse,
   onSubmit,
   onBack,
 }: Step3ResponseProps) => {
