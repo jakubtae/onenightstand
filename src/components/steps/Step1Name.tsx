@@ -18,7 +18,7 @@ export const Step1Name = ({ name, setName, onNext }: Step1NameProps) => {
     >
       <div className="w-full space-y-4">
         <label className="block text-lg font-semibold text-gray-700">
-          1. What&apos;s your name?
+          1. Sooooo… before we kick this thing off, what should we call you?
         </label>
         <div className="flex flex-row gap-3 justify-between items-center">
           <input

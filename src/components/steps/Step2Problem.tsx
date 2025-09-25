@@ -4,9 +4,10 @@ import { responses, Response } from "@/lib/response";
 
 interface Step2ProblemProps {
   onResponseSelect: (response: Response) => void;
+  name: string;
 }
 
-export const Step2Problem = ({ onResponseSelect }: Step2ProblemProps) => {
+export const Step2Problem = ({ onResponseSelect, name }: Step2ProblemProps) => {
   return (
     <motion.div
       key="step2"
@@ -17,10 +18,7 @@ export const Step2Problem = ({ onResponseSelect }: Step2ProblemProps) => {
     >
       <div className="w-full space-y-6">
         <span className="font-semibold text-gray-700 text-lg">
-          2. What is your current{" "}
-          <span className="text-4xl font-bold text-gray-800">
-            biggest problem?
-          </span>
+          2. Alright, let&apos;s get real. Why are you here {name}?
         </span>
         <div className="flex flex-row flex-wrap gap-4 mt-6">
           {responses.map((response: Response) => (

@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import { Response } from "@/lib/response";
-import { ComebackPlanPDF } from "@/lib/pdf";
 import { NavigationHeader } from "./NavigationHeader";
 import { Step1Name } from "./steps/Step1Name";
 import { Step2Problem } from "./steps/Step2Problem";
@@ -15,6 +14,7 @@ type Step = 1 | 2 | 3 | 4 | 5;
 export const QuestionnaireFlow = () => {
   const [step, setStep] = useState<Step>(1);
   const [name, setName] = useState<string>("");
+  const [answer, setAnswer] = useState<string>("");
   const [selectedResponse, setSelectedResponse] = useState<Response | null>(
     null
   );
@@ -58,11 +58,15 @@ export const QuestionnaireFlow = () => {
           <Step1Name name={name} setName={setName} onNext={handleNameNext} />
         )}
 
-        {step === 2 && <Step2Problem onResponseSelect={handleResponseSelect} />}
+        {step === 2 && (
+          <Step2Problem onResponseSelect={handleResponseSelect} name={name} />
+        )}
 
         {step === 3 && selectedResponse && (
           <Step3Response
             name={name}
+            answer={answer}
+            setAnswer={setAnswer}
             selectedResponse={selectedResponse}
             onNext={handleViewFixes}
           />
