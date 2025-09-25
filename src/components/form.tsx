@@ -35,11 +35,11 @@ const responses: Response[] = [
   {
     option: 2,
     question: "I am constantly distracted",
-    text: "[Name], distractions are the silent productivity killers. Benjamin Franklin, known for his incredible output, famously structured his day hour by hour to stay focused. You don&apos;t need to overhaul your life to see change — start by turning off your phone for 30 minutes or blocking one distracting site. Focus is a muscle; train it bit by bit.",
+    text: "[Name], distractions are the silent productivity killers. Benjamin Franklin, known for his incredible output, famously structured his day hour by hour to stay focused. You don't need to overhaul your life to see change — start by turning off your phone for 30 minutes or blocking one distracting site. Focus is a muscle; train it bit by bit.",
     fixes: [
       "Turn off phone notifications / block distracting sites",
       "Use timed work sessions (Pomodoro / 25–50 min focus)",
-      "Declutter workspace and create a dedicated &apos;focus zone&apos;",
+      "Declutter workspace and create a dedicated 'focus zone'",
     ],
   },
   {
@@ -84,9 +84,23 @@ const styles = StyleSheet.create({
     padding: 30,
     fontFamily: "Helvetica",
   },
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
+    padding: 5,
+  },
+  box: {
+    padding: 5,
+    border: "1 solid #D1D5DB",
+  },
+  tableColumn: {
+    width: 300,
+  },
   header: {
     marginBottom: 20,
-    textAlign: "center",
+    textAlign: "left",
     borderBottom: "2 solid #3B82F6",
     paddingBottom: 15,
   },
@@ -130,6 +144,11 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     lineHeight: 1.4,
   },
+  notFixItem: {
+    fontSize: 12,
+    color: "#4B5563",
+    lineHeight: 1.4,
+  },
   timeline: {
     marginTop: 25,
   },
@@ -166,6 +185,9 @@ const styles = StyleSheet.create({
     color: "#9CA3AF",
   },
 });
+
+const HabitsNumber = 3; // Change this to set number of habits
+const habitColors = ["#3B82F6", "#F59E42", "#10B981", "#EF4444", "#6366F1"]; // Example colors
 
 // PDF Document Component
 const ComebackPlanPDF = ({
@@ -280,6 +302,74 @@ const ComebackPlanPDF = ({
           Visit my website
         </Link>
       </Text>
+    </Page>
+    <Page size="A4" style={styles.page} id="HabitTrackerPage">
+      <View style={styles.header}>
+        <Text style={styles.title}>Habit Tracker</Text>
+      </View>
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Your Daily Habit Tracker</Text>
+        <Text style={{ fontSize: 12, color: "#6B7280", lineHeight: 1.5 }}>
+          Use this tracker to monitor your daily habits and stay accountable.
+        </Text>
+      </View>
+      {/* Table Header */}
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          borderBottom: "1 solid #D1D5DB",
+          marginBottom: 6,
+        }}
+      >
+        <Text
+          style={[styles.fixItem, { width: 50, fontWeight: "bold" }]}
+        >{`Day`}</Text>
+        {Array.from({ length: HabitsNumber }).map((_, i) => (
+          <Text
+            key={i}
+            style={[
+              styles.fixItem,
+              {
+                width: 40,
+                textAlign: "center",
+                fontWeight: "bold",
+              },
+            ]}
+          >{`Habit ${i + 1}`}</Text>
+        ))}
+      </View>
+      {/* Table Rows */}
+      {Array.from({ length: 31 }).map((_, dayIdx) => (
+        <View
+          key={dayIdx}
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            marginBottom: 2,
+          }}
+        >
+          <Text style={[styles.notFixItem, { width: 50 }]}>{`Day ${
+            dayIdx + 1
+          }`}</Text>
+          {Array.from({ length: HabitsNumber }).map((_, habitIdx) => (
+            <View
+              key={habitIdx}
+              style={{
+                width: 24,
+                height: 24,
+                borderRadius: 4,
+                border: "1 solid #000000",
+                // backgroundColor: habitColors[habitIdx % habitColors.length],
+                marginHorizontal: 8,
+                marginVertical: 2,
+              }}
+            />
+          ))}
+        </View>
+      ))}
     </Page>
   </Document>
 );
