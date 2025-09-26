@@ -24,7 +24,7 @@ export const Step5 = ({ questionnaireData, onRestart }: Step5PlanProps) => {
       transition={{ duration: 0.3 }}
     >
       <div className="flex flex-col md:flex-row gap-2 max-w-lg">
-        <div className="w-full p-6 border border-gray-200 rounded-lg bg-gray-50 space-y-4">
+        <div className="w-full p-6 border border-gray-200 rounded-lg bg-white space-y-4">
           <h3 className="text-xl font-semibold text-gray-800">
             Boom. Here&apos;s your comeback plan{" "}
             <span className="font-bold text-gray-950">{name}</span>

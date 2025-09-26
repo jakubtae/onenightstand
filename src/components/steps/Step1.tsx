@@ -42,7 +42,7 @@ export const Step1 = ({ form, onSubmit }: Step1NameProps) => {
                   <div className="flex flex-row gap-3 justify-between items-center">
                     <Input
                       placeholder="Enter your name"
-                      className="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent h-full"
+                      className="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent h-full bg-white"
                       {...field}
                     />
                     <Button
