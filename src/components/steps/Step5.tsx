@@ -1,29 +1,20 @@
 import { motion } from "framer-motion";
 import { Button } from "../ui/button";
-import { Response } from "@/lib/response";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "../ui/form";
-import { Input } from "../ui/input";
-import { ReasonAndRulesFormData } from "../QuestionnaireFlow";
-import { UseFormReturn } from "react-hook-form";
+import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
+import { ComebackPlanPDF } from "@/lib/pdf";
+import { QuestionnaireData } from "../QuestionnaireFlow";
 
-interface Step5ResponseProps {
-  form: UseFormReturn<ReasonAndRulesFormData>;
-  name: string;
-  selectedResponse: Response;
-  rules: string;
-  reason: string;
-  onSubmit: (data: ReasonAndRulesFormData) => void;
-  onBack: () => void;
+interface Step5PlanProps {
+  questionnaireData: QuestionnaireData;
+  onRestart: () => void;
 }
 
-export const Step5 = ({ form, onSubmit, onBack }: Step5ResponseProps) => {
+export const Step5 = ({ questionnaireData, onRestart }: Step5PlanProps) => {
+  const { name, selectedResponse, headline, tone, reason, rules } =
+    questionnaireData;
+
+  if (!selectedResponse) return null;
+
   return (
     <motion.div
       key="step5"
@@ -32,83 +23,64 @@ export const Step5 = ({ form, onSubmit, onBack }: Step5ResponseProps) => {
       exit={{ opacity: 0, x: -100 }}
       transition={{ duration: 0.3 }}
     >
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="w-full space-y-6"
-        >
-          <div className="space-y-4">
-            {/* Headline Input */}
-            <FormField
-              control={form.control}
-              name="rules"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="font-semibold text-gray-700 text-lg">
-                    4. Okay, no magic wands here. What&apos;s one or two small
-                    rules you&apos;re actually willing to live by?
-                    <br />
-                    <span className="text-sm font-normal text-gray-600">
-                      (Don&apos;t overthink it, just type it. I&apos;ll clean it
-                      up for you.)
-                    </span>
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Type your rules here..."
-                      className="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="reason"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="font-semibold text-gray-700 text-lg">
-                    5. Every comeback needs a battle cry. What&apos;s yours?
-                    <br />
-                    <span className="text-sm font-normal text-gray-600">
-                      (Don&apos;t have one? I&apos;ll cook something up.)
-                    </span>
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Type your reason why here..."
-                      className="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
+      <div className="flex flex-col md:flex-row gap-2 max-w-lg">
+        <div className="w-full p-6 border border-gray-200 rounded-lg bg-gray-50 space-y-4">
+          <h3 className="text-xl font-semibold text-gray-800">
+            Boom. Here&apos;s your comeback plan{" "}
+            <span className="font-bold text-gray-950">{name}</span>
+          </h3>
+          <p className="text-gray-600 font-medium leading-relaxed italic">
+            It&apos;s not fancy. It&apos;s not fluffy. It&apos;s yours. Print
+            it, screenshot it, tattoo it on your arm — whatever works.
+          </p>
 
-          {/* Navigation Buttons */}
-          <div className="flex gap-3 pt-4">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={onBack}
-              className="flex-1 py-3"
+          {/* <div className="mt-6 p-4 bg-white rounded-lg border">
+            <h4 className="font-semibold text-gray-800 mb-2">
+              Your Plan Includes:
+            </h4>
+            <ul className="text-sm text-gray-600 space-y-1">
+              <li>• Personalized headline: &quot;{headline}&quot;</li>
+              <li>• {tone} coaching approach</li>
+              <li>• Action steps for: {selectedResponse.question}</li>
+              <li>• Personalized reasons : {reason}</li>
+              <li>• Personalized rules : {rules}</li>
+              <li>• 7-day implementation timeline</li>
+              <li>• Daily reflection questions</li>
+            </ul>
+          </div> */}
+
+          <Button
+            className="w-full py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium mt-4"
+            asChild
+          >
+            <PDFDownloadLink
+              document={
+                <ComebackPlanPDF QuestionnaireData={questionnaireData} />
+              }
+              fileName={`${name}-comeback-plan.pdf`}
+              className="w-full flex justify-center items-center"
             >
-              Back
-            </Button>
-            <Button
-              type="submit"
-              className="flex-1 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium disabled:bg-gray-400 disabled:cursor-not-allowed"
-              disabled={!form.formState.isValid || form.formState.isSubmitting}
-            >
-              Next
-            </Button>
-          </div>
-        </form>
-      </Form>
+              {({ loading }) =>
+                loading ? "Generating PDF..." : "Download Your Comeback Plan"
+              }
+            </PDFDownloadLink>
+          </Button>
+
+          <Button
+            variant="outline"
+            onClick={onRestart}
+            className="w-full py-3 rounded-lg border-gray-300 text-gray-700 mt-2"
+          >
+            Create Another Plan
+          </Button>
+        </div>
+
+        {/* <div>
+          <PDFViewer className="aspect-[210/297] w-full" showToolbar={false}>
+            <ComebackPlanPDF QuestionnaireData={questionnaireData} />
+          </PDFViewer>
+        </div> */}
+      </div>
     </motion.div>
   );
 };

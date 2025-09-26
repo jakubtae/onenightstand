@@ -9,11 +9,10 @@ import { NavigationHeader } from "./NavigationHeader";
 import { Step1 } from "./steps/Step1";
 import { Step2 } from "./steps/Step2";
 import { Step3 } from "./steps/Step3";
-// import { Step4 } from "./steps/Preview_not_used";
+import { Step4 } from "./steps/Step4";
 import { Step5 } from "./steps/Step5";
-import { Step6 } from "./steps/Step6";
 
-type Step = 1 | 2 | 3 | 4 | 5 | 6;
+type Step = 1 | 2 | 3 | 4 | 5;
 
 // Form validation schemas
 const nameSchema = z.object({
@@ -105,12 +104,8 @@ export const QuestionnaireFlow = () => {
       headline: data.headline,
       tone: data.tone,
     }));
-    setStep(5);
+    setStep(4);
   };
-
-  // const handlePlanNext = (): void => {
-  //   setStep(5);
-  // };
 
   const handleFinishNext = (data: ReasonAndRulesFormData): void => {
     setQuestionnaireData((prev) => ({
@@ -118,7 +113,7 @@ export const QuestionnaireFlow = () => {
       rules: data.rules,
       reason: data.reason,
     }));
-    setStep(6);
+    setStep(5);
   };
 
   const goBack = (): void => {
@@ -163,19 +158,8 @@ export const QuestionnaireFlow = () => {
           />
         )}
 
-        {/* {step === 4 && questionnaireData.selectedResponse && (
+        {step === 4 && questionnaireData.selectedResponse && (
           <Step4
-            name={questionnaireData.name}
-            selectedResponse={questionnaireData.selectedResponse}
-            headline={questionnaireData.headline}
-            tone={questionnaireData.tone}
-            onNext={handlePlanNext}
-            onBack={goBack}
-          />
-        )} */}
-
-        {step === 5 && questionnaireData.selectedResponse && (
-          <Step5
             form={ReasonAndRulesForm}
             name={questionnaireData.name}
             selectedResponse={questionnaireData.selectedResponse}
@@ -186,8 +170,8 @@ export const QuestionnaireFlow = () => {
           />
         )}
 
-        {step === 6 && questionnaireData.selectedResponse && (
-          <Step6 questionnaireData={questionnaireData} onRestart={restart} />
+        {step === 5 && questionnaireData.selectedResponse && (
+          <Step5 questionnaireData={questionnaireData} onRestart={restart} />
         )}
       </AnimatePresence>
     </div>
