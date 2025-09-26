@@ -44,11 +44,11 @@ export const Step4 = ({ form, onSubmit, onBack }: Step4ResponseProps) => {
               name="rules"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="font-semibold text-gray-700 text-lg">
+                  <FormLabel className="font-semibold text-gray-700 text-lg flex flex-col">
                     4. Okay, no magic wands here. What&apos;s one or two small
                     rules you&apos;re actually willing to live by?
                     <br />
-                    <span className="text-sm font-normal text-gray-600">
+                    <span className="text-sm font-normal text-gray-600 hidden">
                       (Don&apos;t overthink it, just type it. I&apos;ll clean it
                       up for you.)
                     </span>
@@ -72,7 +72,7 @@ export const Step4 = ({ form, onSubmit, onBack }: Step4ResponseProps) => {
                   <FormLabel className="font-semibold text-gray-700 text-lg">
                     5. Every comeback needs a battle cry. What&apos;s yours?
                     <br />
-                    <span className="text-sm font-normal text-gray-600">
+                    <span className="text-sm font-normal text-gray-600 hidden">
                       (Don&apos;t have one? I&apos;ll cook something up.)
                     </span>
                   </FormLabel>

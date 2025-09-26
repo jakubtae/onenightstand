@@ -35,14 +35,14 @@ export const Step1 = ({ form, onSubmit }: Step1NameProps) => {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-lg font-semibold text-gray-700">
+                <FormLabel className="text-lg lg:text-xl font-semibold text-gray-700">
                   1. What&apos;s your name?
                 </FormLabel>
                 <FormControl>
                   <div className="flex flex-row gap-3 justify-between items-center">
                     <Input
                       placeholder="Enter your name"
-                      className="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent h-full"
                       {...field}
                     />
                     <Button

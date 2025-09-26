@@ -49,7 +49,7 @@ export const Step3 = ({ form, onSubmit, onBack }: Step3ResponseProps) => {
               name="headline"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="font-semibold text-gray-700 text-lg">
+                  <FormLabel className="font-semibold text-gray-700 text-lg flex flex-col">
                     3. What&apos;s the big comeback headline you&apos;re
                     chasing?
                     <br />

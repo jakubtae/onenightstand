@@ -8,11 +8,9 @@ interface NavigationHeaderProps {
 
 export const NavigationHeader = ({ step, goBack }: NavigationHeaderProps) => {
   return (
-    <>
-      <h2 className="text-3xl font-bold text-gray-800 mb-2">Questionnaire</h2>
-
-      {step >= 2 && (
-        <div className="flex justify-between absolute top-6 left-[-6px]">
+    <div className="flex items-center justify-start w-full">
+      {step === 2 && (
+        <div className="flex justify-between">
           <Button
             onClick={goBack}
             variant="ghost"
@@ -22,6 +20,6 @@ export const NavigationHeader = ({ step, goBack }: NavigationHeaderProps) => {
           </Button>
         </div>
       )}
-    </>
+    </div>
   );
 };

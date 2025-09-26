@@ -16,7 +16,7 @@ export const Step2 = ({ onResponseSelect, name }: Step2ProblemProps) => {
       exit={{ opacity: 0, x: -100 }}
       transition={{ duration: 0.3 }}
     >
-      <div className="w-full space-y-6">
+      <div className="w-full space-y-2 lg:space-y-6">
         <span className="font-semibold text-gray-700 text-lg">
           2. Alright, let&apos;s get real. Why are you here {name}?
         </span>
