@@ -7,7 +7,7 @@ interface Step2ProblemProps {
   name: string;
 }
 
-export const Step2Problem = ({ onResponseSelect, name }: Step2ProblemProps) => {
+export const Step2 = ({ onResponseSelect, name }: Step2ProblemProps) => {
   return (
     <motion.div
       key="step2"

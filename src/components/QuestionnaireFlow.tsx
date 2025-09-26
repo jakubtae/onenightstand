@@ -5,14 +5,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { AnimatePresence } from "framer-motion";
 import { Response } from "@/lib/response";
-import { Step1Name } from "./steps/Step1Name";
-import { Step2Problem } from "./steps/Step2Problem";
-import { Step3Response } from "./steps/Step3Response";
-import { Step4Fixes } from "./steps/Step4Fixes";
-import { Step5Plan } from "./steps/Step5Plan";
 import { NavigationHeader } from "./NavigationHeader";
+import { Step1 } from "./steps/Step1";
+import { Step2 } from "./steps/Step2";
+import { Step3 } from "./steps/Step3";
+// import { Step4 } from "./steps/Preview_not_used";
+import { Step5 } from "./steps/Step5";
+import { Step6 } from "./steps/Step6";
 
-type Step = 1 | 2 | 3 | 4 | 5;
+type Step = 1 | 2 | 3 | 4 | 5 | 6;
 
 // Form validation schemas
 const nameSchema = z.object({
@@ -27,8 +28,20 @@ const headlineSchema = z.object({
   tone: z.enum(["strict", "motivational", "supportive"]),
 });
 
+const reasonandrulesSchema = z.object({
+  reason: z
+    .string()
+    .min(1, "A reason is required")
+    .max(100, "Too much for a reason"),
+  rules: z
+    .string()
+    .min(1, "A reason is required")
+    .max(100, "Too much for a reason"),
+});
+
 export type NameFormData = z.infer<typeof nameSchema>;
 export type HeadlineFormData = z.infer<typeof headlineSchema>;
+export type ReasonAndRulesFormData = z.infer<typeof reasonandrulesSchema>;
 
 // Main questionnaire data type
 export interface QuestionnaireData {
@@ -36,6 +49,8 @@ export interface QuestionnaireData {
   selectedResponse: Response | null;
   headline: string;
   tone: "strict" | "motivational" | "supportive";
+  reason: string;
+  rules: string;
 }
 
 export const QuestionnaireFlow = () => {
@@ -46,6 +61,8 @@ export const QuestionnaireFlow = () => {
       selectedResponse: null,
       headline: "",
       tone: "strict",
+      reason: "",
+      rules: "",
     }
   );
 
@@ -65,6 +82,13 @@ export const QuestionnaireFlow = () => {
     },
   });
 
+  const ReasonAndRulesForm = useForm<ReasonAndRulesFormData>({
+    resolver: zodResolver(reasonandrulesSchema),
+    defaultValues: {
+      reason: "",
+      rules: "",
+    },
+  });
   const handleNameSubmit = (data: NameFormData): void => {
     setQuestionnaireData((prev) => ({ ...prev, name: data.name }));
     setStep(2);
@@ -81,11 +105,20 @@ export const QuestionnaireFlow = () => {
       headline: data.headline,
       tone: data.tone,
     }));
-    setStep(4);
+    setStep(5);
   };
 
-  const handlePlanNext = (): void => {
-    setStep(5);
+  // const handlePlanNext = (): void => {
+  //   setStep(5);
+  // };
+
+  const handleFinishNext = (data: ReasonAndRulesFormData): void => {
+    setQuestionnaireData((prev) => ({
+      ...prev,
+      rules: data.rules,
+      reason: data.reason,
+    }));
+    setStep(6);
   };
 
   const goBack = (): void => {
@@ -111,19 +144,17 @@ export const QuestionnaireFlow = () => {
       <NavigationHeader step={step} goBack={goBack} />
 
       <AnimatePresence mode="wait">
-        {step === 1 && (
-          <Step1Name form={nameForm} onSubmit={handleNameSubmit} />
-        )}
+        {step === 1 && <Step1 form={nameForm} onSubmit={handleNameSubmit} />}
 
         {step === 2 && (
-          <Step2Problem
+          <Step2
             onResponseSelect={handleResponseSelect}
             name={questionnaireData.name}
           />
         )}
 
         {step === 3 && questionnaireData.selectedResponse && (
-          <Step3Response
+          <Step3
             form={headlineForm}
             name={questionnaireData.name}
             selectedResponse={questionnaireData.selectedResponse}
@@ -132,8 +163,8 @@ export const QuestionnaireFlow = () => {
           />
         )}
 
-        {step === 4 && questionnaireData.selectedResponse && (
-          <Step4Fixes
+        {/* {step === 4 && questionnaireData.selectedResponse && (
+          <Step4
             name={questionnaireData.name}
             selectedResponse={questionnaireData.selectedResponse}
             headline={questionnaireData.headline}
@@ -141,13 +172,22 @@ export const QuestionnaireFlow = () => {
             onNext={handlePlanNext}
             onBack={goBack}
           />
-        )}
+        )} */}
 
         {step === 5 && questionnaireData.selectedResponse && (
-          <Step5Plan
-            questionnaireData={questionnaireData}
-            onRestart={restart}
+          <Step5
+            form={ReasonAndRulesForm}
+            name={questionnaireData.name}
+            selectedResponse={questionnaireData.selectedResponse}
+            rules={questionnaireData.rules}
+            reason={questionnaireData.reason}
+            onSubmit={handleFinishNext}
+            onBack={goBack}
           />
+        )}
+
+        {step === 6 && questionnaireData.selectedResponse && (
+          <Step6 questionnaireData={questionnaireData} onRestart={restart} />
         )}
       </AnimatePresence>
     </div>

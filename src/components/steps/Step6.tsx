@@ -9,8 +9,9 @@ interface Step5PlanProps {
   onRestart: () => void;
 }
 
-export const Step5Plan = ({ questionnaireData, onRestart }: Step5PlanProps) => {
-  const { name, selectedResponse, headline, tone } = questionnaireData;
+export const Step6 = ({ questionnaireData, onRestart }: Step5PlanProps) => {
+  const { name, selectedResponse, headline, tone, reason, rules } =
+    questionnaireData;
 
   if (!selectedResponse) return null;
 
@@ -41,6 +42,8 @@ export const Step5Plan = ({ questionnaireData, onRestart }: Step5PlanProps) => {
               <li>• Personalized headline: &quot;{headline}&quot;</li>
               <li>• {tone} coaching approach</li>
               <li>• Action steps for: {selectedResponse.question}</li>
+              <li>• Personalized reasons : {reason}</li>
+              <li>• Personalized rules : {rules}</li>
               <li>• 7-day implementation timeline</li>
               <li>• Daily reflection questions</li>
             </ul>

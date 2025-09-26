@@ -16,7 +16,7 @@ interface Step1NameProps {
   onSubmit: (data: NameFormData) => void;
 }
 
-export const Step1Name = ({ form, onSubmit }: Step1NameProps) => {
+export const Step1 = ({ form, onSubmit }: Step1NameProps) => {
   return (
     <motion.div
       key="step1"

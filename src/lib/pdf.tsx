@@ -122,7 +122,7 @@ const HabitsNumber = 3; // Change this to set number of habits
 
 // PDF Document Component
 export const ComebackPlanPDF = ({
-  QuestionnaireData: { name, selectedResponse, headline, tone },
+  QuestionnaireData: { name, selectedResponse, headline, tone, reason, rules },
 }: {
   QuestionnaireData: QuestionnaireData;
 }) => (

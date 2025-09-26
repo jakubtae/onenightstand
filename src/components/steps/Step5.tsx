@@ -9,33 +9,24 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
 import { Input } from "../ui/input";
-import { HeadlineFormData } from "../QuestionnaireFlow";
+import { ReasonAndRulesFormData } from "../QuestionnaireFlow";
 import { UseFormReturn } from "react-hook-form";
 
-interface Step3ResponseProps {
-  form: UseFormReturn<HeadlineFormData>;
+interface Step5ResponseProps {
+  form: UseFormReturn<ReasonAndRulesFormData>;
   name: string;
   selectedResponse: Response;
-  onSubmit: (data: HeadlineFormData) => void;
+  rules: string;
+  reason: string;
+  onSubmit: (data: ReasonAndRulesFormData) => void;
   onBack: () => void;
 }
 
-export const Step3Response = ({
-  form,
-  onSubmit,
-  onBack,
-}: Step3ResponseProps) => {
+export const Step5 = ({ form, onSubmit, onBack }: Step5ResponseProps) => {
   return (
     <motion.div
-      key="step3"
+      key="step5"
       initial={{ opacity: 0, x: 100 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -100 }}
@@ -50,12 +41,12 @@ export const Step3Response = ({
             {/* Headline Input */}
             <FormField
               control={form.control}
-              name="headline"
+              name="rules"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="font-semibold text-gray-700 text-lg">
-                    3. What&apos;s the big comeback headline you&apos;re
-                    chasing?
+                    4. Okay, no magic wands here. What&apos;s one or two small
+                    rules you&apos;re actually willing to live by?
                     <br />
                     <span className="text-sm font-normal text-gray-600">
                       (Don&apos;t overthink it, just type it. I&apos;ll clean it
@@ -64,7 +55,7 @@ export const Step3Response = ({
                   </FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Type your headline here..."
+                      placeholder="Type your rules here..."
                       className="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       {...field}
                     />
@@ -73,37 +64,25 @@ export const Step3Response = ({
                 </FormItem>
               )}
             />
-
-            {/* Tone Selection */}
             <FormField
               control={form.control}
-              name="tone"
+              name="reason"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="font-semibold text-gray-700 text-lg">
-                    3b. And how do you want me to talk to you?
+                    5. Every comeback needs a battle cry. What&apos;s yours?
+                    <br />
+                    <span className="text-sm font-normal text-gray-600">
+                      (Don&apos;t have one? I&apos;ll cook something up.)
+                    </span>
                   </FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Select a tone" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="strict">
-                        Strict - Direct and no-nonsense
-                      </SelectItem>
-                      <SelectItem value="motivational">
-                        Motivational - Encouraging and inspiring
-                      </SelectItem>
-                      <SelectItem value="supportive">
-                        Supportive - Gentle and understanding
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <FormControl>
+                    <Input
+                      placeholder="Type your reason why here..."
+                      className="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      {...field}
+                    />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}

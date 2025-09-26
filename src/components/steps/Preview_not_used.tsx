@@ -12,7 +12,7 @@ interface Step4FixesProps {
   onBack: () => void;
 }
 
-export const Step4Fixes = ({
+export const Step4 = ({
   name,
   selectedResponse,
   headline,
