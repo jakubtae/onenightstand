@@ -8,10 +8,28 @@ import {
 } from "@react-pdf/renderer";
 import { QuestionnaireData } from "../components/QuestionnaireFlow";
 
+interface colorSchemeType {
+  background: string;
+  primary: string;
+  secondary: string;
+  accent: string;
+  textPrimary: string;
+  textSecondary: string;
+}
+
+const colorScheme: colorSchemeType = {
+  background: "#FFFFFF",
+  primary: "#3B82F6",
+  secondary: "#F59E42",
+  accent: "#10B981",
+  textPrimary: "#1F2937",
+  textSecondary: "#6B7280",
+};
+
 const styles = StyleSheet.create({
   page: {
     flexDirection: "column",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: colorScheme.background,
     padding: 30,
     fontFamily: "Helvetica",
   },
@@ -116,9 +134,6 @@ const styles = StyleSheet.create({
     color: "#9CA3AF",
   },
 });
-
-const HabitsNumber = 3; // Change this to set number of habits
-// const habitColors = ["#3B82F6", "#F59E42", "#10B981", "#EF4444", "#6366F1"]; // Example colors
 
 // PDF Document Component
 export const ComebackPlanPDF = ({
@@ -234,74 +249,6 @@ export const ComebackPlanPDF = ({
           Visit my website
         </Link>
       </Text>
-    </Page>
-    <Page size="A4" style={styles.page} id="HabitTrackerPage">
-      <View style={styles.header}>
-        <Text style={styles.title}>Habit Tracker</Text>
-      </View>
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Your Daily Habit Tracker</Text>
-        <Text style={{ fontSize: 12, color: "#6B7280", lineHeight: 1.5 }}>
-          Use this tracker to monitor your daily habits and stay accountable.
-        </Text>
-      </View>
-      {/* Table Header */}
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-          borderBottom: "1 solid #D1D5DB",
-          marginBottom: 6,
-        }}
-      >
-        <Text
-          style={[styles.fixItem, { width: 50, fontWeight: "bold" }]}
-        >{`Day`}</Text>
-        {Array.from({ length: HabitsNumber }).map((_, i) => (
-          <Text
-            key={i}
-            style={[
-              styles.fixItem,
-              {
-                width: 40,
-                textAlign: "center",
-                fontWeight: "bold",
-              },
-            ]}
-          >{`Habit ${i + 1}`}</Text>
-        ))}
-      </View>
-      {/* Table Rows */}
-      {Array.from({ length: 31 }).map((_, dayIdx) => (
-        <View
-          key={dayIdx}
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-            marginBottom: 2,
-          }}
-        >
-          <Text style={[styles.notFixItem, { width: 50 }]}>{`Day ${
-            dayIdx + 1
-          }`}</Text>
-          {Array.from({ length: HabitsNumber }).map((_, habitIdx) => (
-            <View
-              key={habitIdx}
-              style={{
-                width: 24,
-                height: 24,
-                borderRadius: 4,
-                border: "1 solid #000000",
-                // backgroundColor: habitColors[habitIdx % habitColors.length],
-                marginHorizontal: 8,
-                marginVertical: 2,
-              }}
-            />
-          ))}
-        </View>
-      ))}
     </Page>
   </Document>
 );
