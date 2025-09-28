@@ -91,6 +91,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     fontFamily: "Helvetica",
+    // transform: "rotate(90)",
   },
   p2title2: {
     fontSize: 48,
@@ -117,6 +118,7 @@ const styles = StyleSheet.create({
   header: {
     marginBottom: 20,
     textAlign: "left",
+    // borderBottom: "2 solid #3B82F6",
     paddingBottom: 15,
     flexDirection: "column",
     alignItems: "center",
@@ -158,47 +160,37 @@ const styles = StyleSheet.create({
   },
 });
 
-interface ComebackPDFProps {
-  data: QuestionnaireData;
-}
-
-const CheekyComments = [
-  "Seriously, do this one tiny thing. Don’t argue with me.",
-  "You got this, even if your brain is screaming ‘nah’.",
-  "Yes, you can. No excuses.",
-  "Tiny wins, huge comeback. Let's go.",
-];
-
-const guideLink = "https://onenightstand-peach.vercel.app/guides";
-
-export const ComebackPDF = ({
+// PDF Document Component
+export const ComebackPlanPDF = ({
   QuestionnaireData: { name, selectedResponse, headline, tone, reason, rules },
 }: {
   QuestionnaireData: QuestionnaireData;
 }) => {
   const rulesArray = rules.split("\n").filter((r) => r.trim() !== "");
-  const taskTitles = ["Fast Win", "Next Push", "Stretch Yourself"];
 
   return (
     <Document>
-      {/* Page 1: Header / Identity */}
       <Page size="A4" style={styles.page1}>
+        {/* Header */}
         <View style={styles.header}>
-          <Text style={styles.title}>{name}'s</Text>
+          <Text style={styles.title}>{name}&apos;s</Text>
           <Text style={styles.title2}>Comeback Plan</Text>
           <Text style={styles.subtitle}>
             Powered by{" "}
-            <Link href="https://onenightstand-peach.vercel.app/">{`lockin.digital`}</Link>
-            {"\n"}
+            <Link
+              href="https://onenightstand-peach.vercel.app/"
+              style={styles.subtitle}
+            >
+              &quot;lockin.digital&quot;
+            </Link>
+            {" \n"}
             {headline}
           </Text>
         </View>
       </Page>
-
-      {/* Pages 2–4: Tasks */}
       {selectedResponse?.fixes.map((fix, i) => (
-        <Page key={i} size="A4" style={styles.page2}>
-          <Text style={styles.p2title2}>{taskTitles[i]}</Text>
+        <Page key={i} size="A4" style={styles.page2} orientation="landscape">
+          <Text style={styles.p2title2}>Step {i + 1}</Text>
           <View style={styles.row}>
             <Svg
               width={52}
@@ -224,23 +216,25 @@ export const ComebackPDF = ({
                 textAlign: "left",
                 lineHeight: 1.3,
               }}
-              wrap
+              wrap={true}
             >
               {fix}
             </Text>
           </View>
-          <Text style={{ fontSize: 18, fontStyle: "italic", marginTop: 10 }}>
-            {CheekyComments[i % CheekyComments.length]}
-          </Text>
-          <Text style={{ fontSize: 14, marginTop: 15, textAlign: "center" }}>
-            Need ideas? Check out some tips in our{" "}
-            <Link href={guideLink}>guides & materials</Link>.
-          </Text>
         </Page>
       ))}
-
-      {/* Page 5: Reflection / Consolidation */}
-      <Page size="A4" style={styles.page}>
+      {/* Page dedicated to showing a user's reason and rules */}
+      <Page
+        size="A4"
+        style={{
+          padding: 40,
+          fontFamily: "Helvetica",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "flex-start",
+        }}
+      >
+        {/* Header */}
         <Text
           style={{
             fontSize: 28,
@@ -249,7 +243,7 @@ export const ComebackPDF = ({
             marginBottom: 30,
           }}
         >
-          Step 4: Lock It In ✅
+          Lock It In ✅
         </Text>
 
         {/* Comeback Line */}
@@ -303,40 +297,13 @@ export const ComebackPDF = ({
           <Text>{reason}</Text>
         </View>
 
-        {/* Reflection prompts */}
-        <Text style={{ fontSize: 16, fontWeight: "bold", marginBottom: 10 }}>
-          Reflection:
-        </Text>
-        <View
-          style={{
-            borderWidth: 1,
-            borderColor: "#000",
-            padding: 15,
-            minHeight: 60,
-            marginBottom: 10,
-          }}
-        >
-          <Text>What one small win am I proud of today?</Text>
-        </View>
-        <View
-          style={{
-            borderWidth: 1,
-            borderColor: "#000",
-            padding: 15,
-            minHeight: 60,
-            marginBottom: 20,
-          }}
-        >
-          <Text>What’s the next tiny action I’ll take to keep momentum?</Text>
-        </View>
-
         {/* Final Commitment */}
         <Text
           style={{
             fontSize: 22,
             fontWeight: "bold",
             textAlign: "center",
-            marginTop: 20,
+            marginTop: 30,
           }}
         >
           ☐ I’m in. No excuses.
@@ -349,11 +316,7 @@ export const ComebackPDF = ({
             marginTop: 10,
           }}
         >
-          Tiny wins, huge comeback. Go get it!
-        </Text>
-        <Text style={{ fontSize: 14, textAlign: "center", marginTop: 15 }}>
-          Need extra guidance? Browse more tips in our{" "}
-          <Link href={guideLink}>guides & materials</Link>.
+          Your comeback starts now. Let’s see you do it.
         </Text>
       </Page>
     </Document>
@@ -381,10 +344,12 @@ export default function Home() {
         }
       </div>
       <PDFViewer className="aspect-[210/297] w-[30%]" showToolbar={false}>
-        <ComebackPDF QuestionnaireData={exampleQuestionareData} />
+        <ComebackPlanPDF QuestionnaireData={exampleQuestionareData} />
       </PDFViewer>
       <PDFDownloadLink
-        document={<ComebackPDF QuestionnaireData={exampleQuestionareData} />}
+        document={
+          <ComebackPlanPDF QuestionnaireData={exampleQuestionareData} />
+        }
         fileName={`${exampleQuestionareData.name}-comeback-plan.pdf`}
         className="w-full flex justify-center items-center"
       >
