@@ -11,6 +11,7 @@ import { Step2 } from "./steps/Step2";
 import { Step3 } from "./steps/Step3";
 import { Step4 } from "./steps/Step4";
 import { Step5 } from "./steps/Step5";
+import { Progress } from "./ui/progress";
 
 type Step = 1 | 2 | 3 | 4 | 5;
 
@@ -152,6 +153,7 @@ export const QuestionnaireFlow = () => {
   return (
     <div className="flex flex-col items-center justify-center gap-2 mx-auto p-2 lg:p-6 relative">
       <NavigationHeader step={step} goBack={goBack} />
+      {step >= 1 && <Progress value={(step / 5) * 100} />}
 
       <AnimatePresence mode="wait">
         {step === 1 && (

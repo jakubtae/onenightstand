@@ -12,8 +12,6 @@ import { UseFormReturn } from "react-hook-form";
 import { Input } from "../ui/input";
 import { NameFormData } from "../QuestionnaireFlow";
 import { useEffect, useState } from "react";
-import { MdOutlineArrowCircleRight } from "react-icons/md";
-import { FaArrowAltCircleRight } from "react-icons/fa";
 
 interface Step1NameProps {
   form: UseFormReturn<NameFormData>;
@@ -103,13 +101,6 @@ export const Step1 = ({
             <p className="text-lg font-medium">
               {tutorialContent[tutorialStep].content}
             </p>
-
-            {/* <Button
-              className="mt-2 bg-blue-600 hover:bg-blue-700 text-white transition-transform hover:scale-105"
-              onClick={() => goToNextStep(tutorialStep)}
-            >
-              <FaArrowAltCircleRight size={24} />
-            </Button> */}
           </motion.div>
           {/* Interactive Progress Dots */}
           <div className="flex flex-col gap-0 items-center justify-center">
