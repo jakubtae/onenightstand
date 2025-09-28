@@ -84,7 +84,7 @@ export const Navigation = () => {
           <div className="absolute top-full left-0 w-full bg-white shadow-lg z-50 border-t">
             <div className="flex flex-col p-4">
               <Button variant="link" asChild className="justify-start py-3">
-                <Link href="/reframing hub" onClick={() => setMenuOpen(false)}>
+                <Link href="/reframinghub" onClick={() => setMenuOpen(false)}>
                   Reframing Hub
                 </Link>
               </Button>
