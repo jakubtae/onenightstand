@@ -43,7 +43,7 @@ const CheekyComments = [
   "Tiny wins, huge comeback. Let's go.",
 ];
 
-const guideLink = "https://onenightstand-peach.vercel.app/guides";
+const guideLink = "https://onenightstand-peach.vercel.app/materials";
 
 export const ComebackPDF = ({
   QuestionnaireData: { name, selectedResponse, headline, tone, reason, rules },
