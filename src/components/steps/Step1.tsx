@@ -11,7 +11,9 @@ import {
 import { UseFormReturn } from "react-hook-form";
 import { Input } from "../ui/input";
 import { NameFormData } from "../QuestionnaireFlow";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { MdOutlineArrowCircleRight } from "react-icons/md";
+import { FaArrowAltCircleRight } from "react-icons/fa";
 
 interface Step1NameProps {
   form: UseFormReturn<NameFormData>;
@@ -27,13 +29,39 @@ export const Step1 = ({
   skipTutorial,
   onSkipTutorial,
 }: Step1NameProps) => {
+  // skipTutorial = false;
   const [tutorialStep, setStep] = useState<TutorialStep>(1);
+  const [isAutoAdvancing, setIsAutoAdvancing] = useState(true);
+
+  // Auto-advance after 3 seconds for each step
+  useEffect(() => {
+    if (!skipTutorial && isAutoAdvancing) {
+      const timer = setTimeout(() => {
+        if (tutorialStep === 4) {
+          onSkipTutorial();
+        } else {
+          setStep((prevStep) => (prevStep + 1) as TutorialStep);
+        }
+      }, 3000); // 3 seconds per step
+
+      return () => clearTimeout(timer);
+    }
+  }, [tutorialStep, skipTutorial, isAutoAdvancing, onSkipTutorial]);
+
   const goToNextStep = (currentStep: TutorialStep) => {
+    // When user clicks manually, disable auto-advance
+    setIsAutoAdvancing(false);
+
     if (currentStep === 4) {
-      onSkipTutorial(); // Notify parent instead of modifying prop
+      onSkipTutorial();
     } else {
       setStep((currentStep + 1) as TutorialStep);
     }
+  };
+
+  const skipToEnd = () => {
+    setIsAutoAdvancing(false);
+    onSkipTutorial();
   };
   return (
     <>
@@ -46,13 +74,15 @@ export const Step1 = ({
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -100 }}
               transition={{ duration: 0.3 }}
+              className="flex flex-col items-center justify-center gap-2 w-full"
             >
-              Step 1
+              We&apos;re your no-nonsense coach. Your rut ends here. Let&apos;s
+              make a plan you can actually stick to.
               <Button
                 className="mt-4 bg-blue-600 hover:bg-blue-700 text-white"
                 onClick={() => goToNextStep(tutorialStep)}
               >
-                Next
+                <FaArrowAltCircleRight size={256} />
               </Button>
             </motion.div>
           )}
@@ -107,6 +137,23 @@ export const Step1 = ({
               </Button>
             </motion.div>
           )}
+          <div className="flex justify-center gap-2 mt-4">
+            {[1, 2, 3, 4].map((step) => (
+              <div
+                key={step}
+                className={`w-2 h-2 rounded-full ${
+                  step === tutorialStep
+                    ? "bg-blue-600"
+                    : step < tutorialStep
+                    ? "bg-blue-400"
+                    : "bg-gray-300"
+                }`}
+              />
+            ))}
+          </div>
+          <Button variant="link" className="text-gray-400" onClick={skipToEnd}>
+            Skip Tutorial
+          </Button>
         </>
       )}
       {skipTutorial && (

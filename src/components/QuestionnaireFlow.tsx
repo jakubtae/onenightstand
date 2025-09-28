@@ -148,7 +148,7 @@ export const QuestionnaireFlow = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center gap-2 max-w-2xl mx-auto p-2 lg:p-6 relative">
+    <div className="flex flex-col items-center justify-center gap-2 mx-auto p-2 lg:p-6 relative">
       <NavigationHeader step={step} goBack={goBack} />
 
       <AnimatePresence mode="wait">
