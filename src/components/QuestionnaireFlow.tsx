@@ -12,6 +12,7 @@ import { Step3 } from "./steps/Step3";
 import { Step4 } from "./steps/Step4";
 import { Step5 } from "./steps/Step5";
 import { Progress } from "./ui/progress";
+import { colorThemes, themeSchemeType } from "@/lib/pdfThemes";
 
 type Step = 1 | 2 | 3 | 4 | 5;
 
@@ -19,13 +20,17 @@ type Step = 1 | 2 | 3 | 4 | 5;
 const nameSchema = z.object({
   name: z.string().min(1, "Name is required").max(50, "Name is too long"),
 });
+const themeNames = colorThemes.map((theme) => theme.name) as [
+  string,
+  ...string[]
+];
 
 const headlineSchema = z.object({
   headline: z
     .string()
     .min(1, "Headline is required")
     .max(100, "Headline is too long"),
-  tone: z.enum(["strict", "motivational", "supportive"]),
+  tone: z.enum(themeNames),
 });
 
 const reasonandrulesSchema = z.object({
@@ -48,7 +53,7 @@ export interface QuestionnaireData {
   name: string;
   selectedResponse: Response | null;
   headline: string;
-  tone: "strict" | "motivational" | "supportive";
+  tone: string;
   reason: string;
   rules: string;
 }
@@ -60,7 +65,7 @@ export const QuestionnaireFlow = () => {
       name: "",
       selectedResponse: null,
       headline: "",
-      tone: "strict",
+      tone: colorThemes[0].name,
       reason: "",
       rules: "",
     }
@@ -93,7 +98,7 @@ export const QuestionnaireFlow = () => {
     resolver: zodResolver(headlineSchema),
     defaultValues: {
       headline: "",
-      tone: "strict",
+      tone: colorThemes[0].name,
     },
   });
 

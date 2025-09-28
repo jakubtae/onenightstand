@@ -23,6 +23,7 @@ const hyphenationCallback: HyphenationCallback = (word: string): string[] => {
 Font.registerHyphenationCallback(hyphenationCallback);
 
 import { QuestionnaireData } from "@/components/QuestionnaireFlow";
+import { colorThemes } from "./pdfThemes";
 
 interface colorSchemeType {
   background: string;
@@ -30,95 +31,6 @@ interface colorSchemeType {
   textPrimary: string;
   textSecondary: string;
 }
-
-export const colorScheme: colorSchemeType = {
-  background: "#ffffff",
-  accent: "#F45B69",
-  textPrimary: "#22181C",
-  textSecondary: "#6B7280",
-};
-
-const styles = StyleSheet.create({
-  page1: {
-    flexDirection: "column",
-    backgroundColor: colorScheme.accent,
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 30,
-    fontFamily: "Helvetica",
-  },
-  page2: {
-    flexDirection: "column",
-    backgroundColor: colorScheme.background,
-    alignItems: "center",
-    justifyContent: "center",
-    fontFamily: "Helvetica",
-  },
-  p2title2: {
-    fontSize: 48,
-    fontWeight: "bold",
-    position: "absolute",
-    top: 64,
-  },
-  page: {
-    flexDirection: "column",
-    backgroundColor: colorScheme.background,
-    padding: 30,
-    fontFamily: "Helvetica",
-  },
-  row: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-    gap: 32,
-    alignItems: "center",
-    maxWidth: "75%",
-    width: "75%",
-    paddingHorizontal: 20,
-  },
-  header: {
-    marginBottom: 20,
-    textAlign: "left",
-    paddingBottom: 15,
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 96,
-    fontWeight: "bold",
-    color: colorScheme.background,
-    textTransform: "uppercase",
-  },
-  title2: {
-    fontSize: 48,
-    fontWeight: "bold",
-    color: colorScheme.background,
-    textTransform: "uppercase",
-    textAlign: "center",
-  },
-  subtitle: {
-    fontSize: 16,
-    color: colorScheme.background,
-    fontWeight: "bold",
-    textDecoration: "none",
-    textAlign: "center",
-  },
-  rotatedText: {
-    fontSize: 32,
-    fontWeight: "semibold",
-    marginLeft: 32,
-  },
-  footer: {
-    position: "absolute",
-    bottom: 30,
-    left: 30,
-    right: 30,
-    textAlign: "center",
-    fontSize: 10,
-    color: "#9CA3AF",
-  },
-});
 
 interface ComebackPDFProps {
   data: QuestionnaireData;
@@ -140,6 +52,97 @@ export const ComebackPDF = ({
 }) => {
   const rulesArray = rules.split("\n").filter((r) => r.trim() !== "");
   const taskTitles = ["Fast Win", "Next Push", "Stretch Yourself"];
+  const colorScheme = colorThemes.find((theme) => theme.name === tone)
+    ?.colorScheme as colorSchemeType;
+  const styles = StyleSheet.create({
+    page1: {
+      flexDirection: "column",
+      backgroundColor: colorScheme.accent,
+      alignItems: "center",
+      justifyContent: "center",
+      padding: 30,
+      fontFamily: "Helvetica",
+    },
+    page2: {
+      flexDirection: "column",
+      backgroundColor: colorScheme.background,
+      alignItems: "center",
+      justifyContent: "center",
+      fontFamily: "Helvetica",
+    },
+    p2title2: {
+      fontSize: 48,
+      fontWeight: "bold",
+      position: "absolute",
+      top: 64,
+      borderBottom: "4px solid blue",
+      borderBottomColor: colorScheme.accent,
+    },
+    page: {
+      flexDirection: "column",
+      backgroundColor: colorScheme.background,
+      padding: 30,
+      fontFamily: "Helvetica",
+    },
+    row: {
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "center",
+      gap: 32,
+      alignItems: "center",
+      maxWidth: "75%",
+      width: "75%",
+      paddingHorizontal: 20,
+    },
+    header: {
+      marginBottom: 20,
+      textAlign: "left",
+      paddingBottom: 15,
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    title: {
+      fontSize: 96,
+      fontWeight: "bold",
+      color: colorScheme.background,
+      textTransform: "uppercase",
+    },
+    title2: {
+      fontSize: 48,
+      fontWeight: "bold",
+      color: colorScheme.background,
+      textTransform: "uppercase",
+      textAlign: "center",
+    },
+    subtitle: {
+      fontSize: 16,
+      color: colorScheme.background,
+      fontWeight: "bold",
+      textDecoration: "none",
+      textAlign: "center",
+    },
+    rotatedText: {
+      fontSize: 32,
+      fontWeight: "semibold",
+      marginLeft: 32,
+    },
+    footer: {
+      position: "absolute",
+      bottom: 30,
+      left: 30,
+      right: 30,
+      textAlign: "center",
+      fontSize: 10,
+      color: "#9CA3AF",
+    },
+    link: {
+      color: colorScheme.textPrimary,
+    },
+    linkInverted: {
+      color: colorScheme.background,
+    },
+  });
 
   return (
     <Document>
@@ -150,7 +153,10 @@ export const ComebackPDF = ({
           <Text style={styles.title2}>Comeback Plan</Text>
           <Text style={styles.subtitle}>
             Powered by{" "}
-            <Link href="https://onenightstand-peach.vercel.app/">{`lockin.digital`}</Link>
+            <Link
+              href="https://onenightstand-peach.vercel.app/"
+              style={styles.linkInverted}
+            >{`lockin.digital`}</Link>
             {"\n"}
             {headline}
           </Text>
@@ -174,8 +180,8 @@ export const ComebackPDF = ({
                 width="52"
                 height="52"
                 fill="#fff"
-                stroke="#000"
-                strokeWidth={2}
+                stroke={colorScheme.accent}
+                strokeWidth={4}
               />
             </Svg>
             <Text
@@ -191,12 +197,32 @@ export const ComebackPDF = ({
               {fix}
             </Text>
           </View>
-          <Text style={{ fontSize: 18, fontStyle: "italic", marginTop: 10 }}>
+          <Text
+            style={{
+              fontSize: 18,
+              fontStyle: "italic",
+              marginTop: 10,
+              paddingBottom: 10,
+              borderBottom: "1px solid blue",
+              borderBottomColor: colorScheme.accent,
+            }}
+          >
             {CheekyComments[i % CheekyComments.length]}
           </Text>
-          <Text style={{ fontSize: 14, marginTop: 15, textAlign: "center" }}>
+          <Text
+            style={{
+              fontSize: 14,
+              marginTop: 15,
+              textAlign: "center",
+              color: colorScheme.textSecondary,
+              fontWeight: "light",
+            }}
+          >
             Need ideas? Check out some tips in our{" "}
-            <Link href={guideLink}>guides & materials</Link>.
+            <Link href={guideLink} style={styles.link}>
+              guides & materials
+            </Link>
+            .
           </Text>
         </Page>
       ))}
@@ -209,13 +235,24 @@ export const ComebackPDF = ({
             fontWeight: "bold",
             textAlign: "center",
             marginBottom: 30,
+            borderBottom: "4px solid blue",
+            borderBottomColor: colorScheme.accent,
           }}
         >
-          Step 4: Lock It In ✅
+          Step 4: Lock It In
         </Text>
 
         {/* Comeback Line */}
-        <Text style={{ fontSize: 16, fontWeight: "bold", marginBottom: 10 }}>
+        <Text
+          style={{
+            fontSize: 16,
+            fontWeight: "bold",
+            marginBottom: 10,
+            paddingLeft: 4,
+            borderLeft: "2px solid blue",
+            borderLeftColor: colorScheme.accent,
+          }}
+        >
           My Comeback Line:
         </Text>
         <View
@@ -231,7 +268,16 @@ export const ComebackPDF = ({
         </View>
 
         {/* Rules */}
-        <Text style={{ fontSize: 16, fontWeight: "bold", marginBottom: 10 }}>
+        <Text
+          style={{
+            fontSize: 16,
+            fontWeight: "bold",
+            marginBottom: 10,
+            paddingLeft: 4,
+            borderLeft: "2px solid blue",
+            borderLeftColor: colorScheme.accent,
+          }}
+        >
           Rules I’m sticking to:
         </Text>
         {rulesArray.map((rule, idx) => (
@@ -250,7 +296,16 @@ export const ComebackPDF = ({
         ))}
 
         {/* Motivation */}
-        <Text style={{ fontSize: 16, fontWeight: "bold", marginBottom: 10 }}>
+        <Text
+          style={{
+            fontSize: 16,
+            fontWeight: "bold",
+            marginBottom: 10,
+            paddingLeft: 4,
+            borderLeft: "2px solid blue",
+            borderLeftColor: colorScheme.accent,
+          }}
+        >
           Why I’m doing this:
         </Text>
         <View
@@ -299,6 +354,9 @@ export const ComebackPDF = ({
             fontWeight: "bold",
             textAlign: "center",
             marginTop: 20,
+            paddingBottom: 4,
+            borderBottom: "2px solid blue",
+            borderBottomColor: colorScheme.accent,
           }}
         >
           ☐ I’m in. No excuses.
@@ -315,7 +373,10 @@ export const ComebackPDF = ({
         </Text>
         <Text style={{ fontSize: 14, textAlign: "center", marginTop: 15 }}>
           Need extra guidance? Browse more tips in our{" "}
-          <Link href={guideLink}>guides & materials</Link>.
+          <Link href={guideLink} style={styles.link}>
+            guides & materials
+          </Link>
+          .
         </Text>
       </Page>
     </Document>

@@ -1,5 +1,8 @@
+"use client";
 import { QuestionnaireData } from "@/components/QuestionnaireFlow";
-import { colorScheme, ComebackPDF } from "@/lib/newpdf";
+import { ComebackPDF } from "@/lib/newpdf";
+import { colorThemes } from "@/lib/pdfThemes";
+const colorScheme = colorThemes[0].colorScheme;
 import dynamic from "next/dynamic";
 const exampleQuestionareData: QuestionnaireData = {
   name: "Jacob",

@@ -19,6 +19,7 @@ import {
 import { Input } from "../ui/input";
 import { HeadlineFormData } from "../QuestionnaireFlow";
 import { UseFormReturn } from "react-hook-form";
+import { colorThemes } from "@/lib/pdfThemes";
 
 interface Step3ResponseProps {
   form: UseFormReturn<HeadlineFormData>;
@@ -75,7 +76,7 @@ export const Step3 = ({ form, onSubmit, onBack }: Step3ResponseProps) => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="font-semibold text-gray-700 text-lg">
-                    And how do you want me to talk to you?
+                    Choose a color theme
                   </FormLabel>
                   <Select
                     onValueChange={field.onChange}
@@ -83,19 +84,15 @@ export const Step3 = ({ form, onSubmit, onBack }: Step3ResponseProps) => {
                   >
                     <FormControl>
                       <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Select a tone" />
+                        <SelectValue placeholder="Select a color theme" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="strict">
-                        Strict - Direct and no-nonsense
-                      </SelectItem>
-                      <SelectItem value="motivational">
-                        Motivational - Encouraging and inspiring
-                      </SelectItem>
-                      <SelectItem value="supportive">
-                        Supportive - Gentle and understanding
-                      </SelectItem>
+                      {colorThemes.map((colorTheme, i) => (
+                        <SelectItem value={colorTheme.name} key={i}>
+                          {colorTheme.name}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                   <FormMessage />
