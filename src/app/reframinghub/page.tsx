@@ -4,6 +4,7 @@ export default function Home() {
       <h1 className="text-4xl lg:text-6xl font-bold text-wrap">
         Reframing Hub
       </h1>
+      <h2 className="text-4xl lg:text-6xl font-bold text-wrap">Coming soon</h2>
     </div>
   );
 }
