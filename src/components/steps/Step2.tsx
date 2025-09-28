@@ -18,7 +18,7 @@ export const Step2 = ({ onResponseSelect, name }: Step2ProblemProps) => {
     >
       <div className="w-full space-y-2 lg:space-y-6">
         <span className="font-semibold text-gray-700 text-lg">
-          2. Alright, let&apos;s get real. Why are you here {name}?
+          Alright, let&apos;s get real. Why are you here {name}?
         </span>
         <div className="flex flex-row flex-wrap gap-4 mt-6">
           {responses.map((response: Response) => (

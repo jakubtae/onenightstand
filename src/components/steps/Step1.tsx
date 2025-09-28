@@ -160,7 +160,7 @@ export const Step1 = ({
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-lg lg:text-xl font-semibold text-gray-700">
-                      1. What&apos;s your name?
+                      What&apos;s your name?
                     </FormLabel>
                     <FormControl>
                       <div className="flex flex-row gap-3 justify-between items-center">

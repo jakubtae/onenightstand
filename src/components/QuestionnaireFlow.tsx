@@ -155,13 +155,13 @@ export const QuestionnaireFlow = () => {
       <NavigationHeader step={step} goBack={goBack} />
       {step >= 1 && (
         <div className="flex flex-col items-center justify-center w-full">
-          <Progress value={(step / 5) * 100} />
           <span>
             {step === 1 && "Warming up 🔥"}
             {step === 2 && "Halfway there, don’t quit now 👊"}
             {step === 3 && "Almost done, champ 🏆"}
             {step === 4 && "Finish strong 🚀"}
           </span>
+          <Progress value={(step / 5) * 100} />
         </div>
       )}
 

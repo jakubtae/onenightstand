@@ -49,14 +49,12 @@ export const Step3 = ({ form, onSubmit, onBack }: Step3ResponseProps) => {
               name="headline"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="font-semibold text-gray-700 text-lg flex flex-col">
-                    3. What&apos;s the big comeback headline you&apos;re
-                    chasing?
-                    <br />
-                    <span className="text-sm font-normal text-gray-600">
+                  <FormLabel className="font-semibold text-gray-700 text-lg flex flex-col gap-0 items-start">
+                    What&apos;s the big comeback headline you&apos;re chasing?
+                    <p className="text-sm font-normal text-gray-600 text-left">
                       (Don&apos;t overthink it, just type it. I&apos;ll clean it
                       up for you.)
-                    </span>
+                    </p>
                   </FormLabel>
                   <FormControl>
                     <Input
@@ -77,7 +75,7 @@ export const Step3 = ({ form, onSubmit, onBack }: Step3ResponseProps) => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="font-semibold text-gray-700 text-lg">
-                    3b. And how do you want me to talk to you?
+                    And how do you want me to talk to you?
                   </FormLabel>
                   <Select
                     onValueChange={field.onChange}

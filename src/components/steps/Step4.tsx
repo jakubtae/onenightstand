@@ -45,8 +45,8 @@ export const Step4 = ({ form, onSubmit, onBack }: Step4ResponseProps) => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="font-semibold text-gray-700 text-lg flex flex-col">
-                    4. Okay, no magic wands here. What&apos;s one or two small
-                    rules you&apos;re actually willing to live by?
+                    What&apos;s one rule you&apos;re actually willing to live
+                    by?
                     <br />
                     <span className="text-sm font-normal text-gray-600 hidden">
                       (Don&apos;t overthink it, just type it. I&apos;ll clean it
@@ -55,7 +55,7 @@ export const Step4 = ({ form, onSubmit, onBack }: Step4ResponseProps) => {
                   </FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Type your rules here..."
+                      placeholder="Type your rule here (Wake up at 5am, No sugar, etc)..."
                       className="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       {...field}
                     />
@@ -70,15 +70,11 @@ export const Step4 = ({ form, onSubmit, onBack }: Step4ResponseProps) => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="font-semibold text-gray-700 text-lg">
-                    5. Every comeback needs a battle cry. What&apos;s yours?
-                    <br />
-                    <span className="text-sm font-normal text-gray-600 hidden">
-                      (Don&apos;t have one? I&apos;ll cook something up.)
-                    </span>
+                    Every comeback needs a battle cry. What&apos;s yours?
                   </FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Type your reason why here..."
+                      placeholder="Type your reason why here... (To get back at my ex, etc)..."
                       className="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       {...field}
                     />
