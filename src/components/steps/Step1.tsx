@@ -46,21 +46,21 @@ export const Step1 = ({
     }
   }, [tutorialStep, skipTutorial, isAutoAdvancing, onSkipTutorial]);
 
-  const goToNextStep = (currentStep: TutorialStep) => {
-    // When user clicks manually, disable auto-advance
-    setIsAutoAdvancing(false);
+  // const goToNextStep = (currentStep: TutorialStep) => {
+  //   // When user clicks manually, disable auto-advance
+  //   setIsAutoAdvancing(false);
 
-    if (currentStep === 4) {
-      onSkipTutorial();
-    } else {
-      setStep((currentStep + 1) as TutorialStep);
-    }
-  };
+  //   if (currentStep === 4) {
+  //     onSkipTutorial();
+  //   } else {
+  //     setStep((currentStep + 1) as TutorialStep);
+  //   }
+  // };
 
-  const skipToEnd = () => {
-    setIsAutoAdvancing(false);
-    onSkipTutorial();
-  };
+  // const skipToEnd = () => {
+  //   setIsAutoAdvancing(false);
+  //   onSkipTutorial();
+  // };
 
   const goToStep = (step: TutorialStep) => {
     setIsAutoAdvancing(false);

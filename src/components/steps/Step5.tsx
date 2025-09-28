@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 import { Button } from "../ui/button";
-import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
-import { ComebackPlanPDF } from "@/lib/pdf";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 import { QuestionnaireData } from "../QuestionnaireFlow";
+import { ComebackPDF } from "@/lib/newpdf";
 
 interface Step5PlanProps {
   questionnaireData: QuestionnaireData;
@@ -10,8 +10,7 @@ interface Step5PlanProps {
 }
 
 export const Step5 = ({ questionnaireData, onRestart }: Step5PlanProps) => {
-  const { name, selectedResponse, headline, tone, reason, rules } =
-    questionnaireData;
+  const { name, selectedResponse } = questionnaireData;
 
   if (!selectedResponse) return null;
 
@@ -54,9 +53,7 @@ export const Step5 = ({ questionnaireData, onRestart }: Step5PlanProps) => {
             asChild
           >
             <PDFDownloadLink
-              document={
-                <ComebackPlanPDF QuestionnaireData={questionnaireData} />
-              }
+              document={<ComebackPDF QuestionnaireData={questionnaireData} />}
               fileName={`${name}-comeback-plan.pdf`}
               className="w-full flex justify-center items-center"
             >
