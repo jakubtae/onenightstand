@@ -151,9 +151,19 @@ export const QuestionnaireFlow = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center gap-2 mx-auto p-2 lg:p-6 relative">
+    <div className="flex flex-col items-center justify-center gap-2 max-w-2xl mx-auto p-2 lg:p-6 relative">
       <NavigationHeader step={step} goBack={goBack} />
-      {step >= 1 && <Progress value={(step / 5) * 100} />}
+      {step >= 1 && (
+        <div className="flex flex-col items-center justify-center w-full">
+          <Progress value={(step / 5) * 100} />
+          <span>
+            {step === 1 && "Warming up 🔥"}
+            {step === 2 && "Halfway there, don’t quit now 👊"}
+            {step === 3 && "Almost done, champ 🏆"}
+            {step === 4 && "Finish strong 🚀"}
+          </span>
+        </div>
+      )}
 
       <AnimatePresence mode="wait">
         {step === 1 && (
