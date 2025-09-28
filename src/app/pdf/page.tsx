@@ -6,7 +6,21 @@ import {
   Document,
   StyleSheet,
   Link,
+  Svg,
+  Rect,
 } from "@react-pdf/renderer";
+
+import { Font } from "@react-pdf/renderer";
+
+interface HyphenationCallback {
+  (word: string): string[];
+}
+
+const hyphenationCallback: HyphenationCallback = (word: string): string[] => {
+  return [word];
+};
+
+Font.registerHyphenationCallback(hyphenationCallback);
 
 import dynamic from "next/dynamic";
 
@@ -17,28 +31,34 @@ const PDFViewer = dynamic(
     loading: () => <p>Loading...</p>,
   }
 );
+
+const PDFDownloadLink = dynamic(
+  () => import("@react-pdf/renderer").then((mod) => mod.PDFDownloadLink),
+  {
+    ssr: false,
+    loading: () => <p>Loading...</p>,
+  }
+);
+
 import { QuestionnaireData } from "@/components/QuestionnaireFlow";
+import { title } from "process";
 
 interface colorSchemeType {
   background: string;
-  backgroundSecondary: string;
-  secondary: string;
   accent: string;
   textPrimary: string;
   textSecondary: string;
 }
 
 const colorScheme: colorSchemeType = {
-  background: "#F6E8EA",
-  backgroundSecondary: "#C1A5A9",
-  secondary: "#F59E42",
+  background: "#ffffff",
   accent: "#F45B69",
   textPrimary: "#22181C",
   textSecondary: "#6B7280",
 };
 
 const exampleQuestionareData: QuestionnaireData = {
-  name: "John Doe",
+  name: "Jacob",
   headline: "Get Back on Track with Your Goals",
   tone: "strict",
   reason: "I want to improve my productivity and focus.",
@@ -57,6 +77,28 @@ const exampleQuestionareData: QuestionnaireData = {
 };
 
 const styles = StyleSheet.create({
+  page1: {
+    flexDirection: "column",
+    backgroundColor: colorScheme.accent,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 30,
+    fontFamily: "Helvetica",
+  },
+  page2: {
+    flexDirection: "column",
+    backgroundColor: colorScheme.background,
+    alignItems: "center",
+    justifyContent: "center",
+    fontFamily: "Helvetica",
+    // transform: "rotate(90)",
+  },
+  p2title2: {
+    fontSize: 48,
+    fontWeight: "bold",
+    position: "absolute",
+    top: 64,
+  },
   page: {
     flexDirection: "column",
     backgroundColor: colorScheme.background,
@@ -64,96 +106,48 @@ const styles = StyleSheet.create({
     fontFamily: "Helvetica",
   },
   row: {
+    display: "flex",
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "center",
+    gap: 32,
     alignItems: "center",
-    width: "100%",
-    padding: 5,
-  },
-  box: {
-    padding: 5,
-    border: "1 solid #D1D5DB",
-  },
-  tableColumn: {
-    width: 300,
+    maxWidth: "75%",
+    width: "75%",
+    paddingHorizontal: 20,
   },
   header: {
     marginBottom: 20,
     textAlign: "left",
-    borderBottom: "2 solid #3B82F6",
+    // borderBottom: "2 solid #3B82F6",
     paddingBottom: 15,
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
   },
   title: {
-    fontSize: 28,
+    fontSize: 96,
     fontWeight: "bold",
-    color: "#1F2937",
-    marginBottom: 5,
-    textTransform: "capitalize",
+    color: colorScheme.background,
+    textTransform: "uppercase",
+  },
+  title2: {
+    fontSize: 48,
+    fontWeight: "bold",
+    color: colorScheme.background,
+    textTransform: "uppercase",
+    textAlign: "center",
   },
   subtitle: {
     fontSize: 16,
-    color: "#6B7280",
+    color: colorScheme.background,
     fontWeight: "bold",
     textDecoration: "none",
-  },
-  section: {
-    marginBottom: 20,
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#1F2937",
-    marginBottom: 10,
-    backgroundColor: "#F3F4F6",
-    padding: 8,
-    borderRadius: 4,
-  },
-  problemStatement: {
-    fontSize: 14,
-    color: "#374151",
-    lineHeight: 1.6,
-    marginBottom: 15,
-    fontStyle: "italic",
-    backgroundColor: "#F9FAFB",
-    padding: 12,
-    borderRadius: 4,
-  },
-  fixItem: {
-    fontSize: 12,
-    color: "#4B5563",
-    marginBottom: 8,
-    lineHeight: 1.4,
-  },
-  notFixItem: {
-    fontSize: 12,
-    color: "#4B5563",
-    lineHeight: 1.4,
-  },
-  timeline: {
-    marginTop: 25,
-  },
-  timelineItem: {
-    marginBottom: 15,
-    flexDirection: "row",
-  },
-  timelineDay: {
-    width: 60,
-    fontSize: 12,
-    fontWeight: "bold",
-    color: "#3B82F6",
-  },
-  timelineContent: {
-    flex: 1,
-    fontSize: 11,
-    color: "#6B7280",
-  },
-  quote: {
-    fontSize: 11,
-    color: "#9CA3AF",
-    fontStyle: "italic",
     textAlign: "center",
-    marginTop: 30,
-    marginBottom: 10,
+  },
+  rotatedText: {
+    fontSize: 32,
+    fontWeight: "semibold",
+    marginLeft: 32,
   },
   footer: {
     position: "absolute",
@@ -173,29 +167,59 @@ export const ComebackPlanPDF = ({
   QuestionnaireData: QuestionnaireData;
 }) => (
   <Document>
-    <Page size="A4" style={styles.page}>
+    <Page size="A4" style={styles.page1}>
       {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.title}>{name}&apos;s Comeback Plan</Text>
+        <Text style={styles.title}>{name}&apos;s</Text>
+        <Text style={styles.title2}>Comeback Plan</Text>
         <Text style={styles.subtitle}>
           Powered by{" "}
           <Link
             href="https://onenightstand-peach.vercel.app/"
             style={styles.subtitle}
           >
-            lockin.digital
+            &quot;lockin.digital&quot;
           </Link>
+          {" \n"}
+          {headline}
         </Text>
       </View>
-
-      <Text style={styles.footer}>
-        Generated on {new Date().toLocaleString()} • This plan is personalized
-        for {name} • Remember: Progress, not perfection •{"\n"}
-        <Link href="https://onenightstand-peach.vercel.app/">
-          Visit my website
-        </Link>
-      </Text>
     </Page>
+    {selectedResponse?.fixes.map((fix, i) => (
+      <Page key={i} size="A4" style={styles.page2} orientation="landscape">
+        <Text style={styles.p2title2}>Step {i + 1}</Text>
+        <View style={styles.row}>
+          <Svg
+            width={52}
+            height={52}
+            viewBox="0 0 52 52"
+            preserveAspectRatio="xMidYMid meet"
+          >
+            <Rect
+              x="0"
+              y="0"
+              width="52"
+              height="52"
+              fill="#fff"
+              stroke="#000"
+              strokeWidth={2}
+            />
+          </Svg>
+          <Text
+            style={{
+              fontSize: 32,
+              fontWeight: "semibold",
+              flex: 1,
+              textAlign: "left",
+              lineHeight: 1.3,
+            }}
+            wrap={true}
+          >
+            {fix}
+          </Text>
+        </View>
+      </Page>
+    ))}
   </Document>
 );
 
@@ -219,9 +243,20 @@ export default function Home() {
           ))
         }
       </div>
-      <PDFViewer className="aspect-[210/297] w-[50%]" showToolbar={false}>
+      <PDFViewer className="aspect-[210/297] w-[30%]" showToolbar={false}>
         <ComebackPlanPDF QuestionnaireData={exampleQuestionareData} />
       </PDFViewer>
+      <PDFDownloadLink
+        document={
+          <ComebackPlanPDF QuestionnaireData={exampleQuestionareData} />
+        }
+        fileName={`${exampleQuestionareData.name}-comeback-plan.pdf`}
+        className="w-full flex justify-center items-center"
+      >
+        {({ loading }) =>
+          loading ? "Generating PDF..." : "Download Your Comeback Plan"
+        }
+      </PDFDownloadLink>
     </div>
   );
 }
