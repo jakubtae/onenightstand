@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -64,13 +64,15 @@ export const QuestionnaireFlow = () => {
       rules: "",
     }
   );
-  // skipTutorial state in localStorage
-  const [skipTutorial, setSkipTutorial] = useState<boolean>(() => {
+  // skipTutorial state in localStorage (hydration-safe)
+  const [skipTutorial, setSkipTutorial] = useState<boolean>(false);
+  // Only read localStorage on client after mount
+  useEffect(() => {
     if (typeof window !== "undefined") {
-      return localStorage.getItem("skipTutorial") === "true";
+      const stored = localStorage.getItem("skipTutorial");
+      if (stored === "true") setSkipTutorial(true);
     }
-    return false;
-  });
+  }, []);
   const handleSkipTutorial = () => {
     setSkipTutorial(true);
     if (typeof window !== "undefined") {

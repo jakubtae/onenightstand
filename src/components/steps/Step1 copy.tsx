@@ -12,7 +12,6 @@ import { UseFormReturn } from "react-hook-form";
 import { Input } from "../ui/input";
 import { NameFormData } from "../QuestionnaireFlow";
 import { useEffect, useState } from "react";
-import { MdOutlineArrowCircleRight } from "react-icons/md";
 import { FaArrowAltCircleRight } from "react-icons/fa";
 
 interface Step1NameProps {
@@ -29,7 +28,7 @@ export const Step1 = ({
   skipTutorial,
   onSkipTutorial,
 }: Step1NameProps) => {
-  // skipTutorial = false;
+  skipTutorial = false;
   const [tutorialStep, setStep] = useState<TutorialStep>(1);
   const [isAutoAdvancing, setIsAutoAdvancing] = useState(true);
 
@@ -63,91 +62,97 @@ export const Step1 = ({
     setIsAutoAdvancing(false);
     onSkipTutorial();
   };
-
-  const goToStep = (step: TutorialStep) => {
-    setIsAutoAdvancing(false);
-    setStep(step);
-  };
-
-  const tutorialContent = {
-    1: {
-      content:
-        "We're your no-nonsense coach. Your rut ends here. Let's make a plan you can actually stick to.",
-    },
-    2: {
-      content:
-        "Step 2: Discover what really matters to you and build habits that last.",
-    },
-    3: {
-      content:
-        "Step 3: Track your progress and celebrate small wins along the way.",
-    },
-    4: {
-      content: "Step 4: Ready to begin? Let's create your personalized plan.",
-    },
-  };
-
   return (
     <>
       {!skipTutorial && (
         <>
-          {/* Tutorial Content */}
-          <motion.div
-            key={`step-${tutorialStep}`}
-            initial={{ opacity: 0, x: 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -100 }}
-            transition={{ duration: 0.3 }}
-            className="flex flex-col items-center justify-center gap-4 w-full min-h-[200px] text-center"
-          >
-            <p className="text-lg font-medium">
-              {tutorialContent[tutorialStep].content}
-            </p>
-
-            {/* <Button
-              className="mt-2 bg-blue-600 hover:bg-blue-700 text-white transition-transform hover:scale-105"
-              onClick={() => goToNextStep(tutorialStep)}
+          {tutorialStep === 1 && (
+            <motion.div
+              key="step1"
+              initial={{ opacity: 0, x: 100 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -100 }}
+              transition={{ duration: 0.3 }}
+              className="flex flex-col items-center justify-center gap-2 w-full"
             >
-              <FaArrowAltCircleRight size={24} />
-            </Button> */}
-          </motion.div>
-          {/* Interactive Progress Dots */}
-          <div className="flex flex-col gap-0 items-center justify-center">
-            <div className="flex justify-center gap-3 mt-6">
-              {([1, 2, 3, 4] as TutorialStep[]).map((step) => (
-                <motion.button
-                  key={step}
-                  onClick={() => goToStep(step)}
-                  className={`rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
-                    step === tutorialStep
-                      ? "bg-blue-600"
-                      : step < tutorialStep
-                      ? "bg-blue-400"
-                      : "bg-gray-300"
-                  }`}
-                  whileHover={{ scale: 1.3 }}
-                  whileTap={{ scale: 0.9 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                >
-                  <motion.div
-                    className="w-3 h-3 rounded-full"
-                    animate={{
-                      scale: step === tutorialStep ? 1.2 : 1,
-                    }}
-                  />
-                </motion.button>
-              ))}
-            </div>
-            {/* Step Indicator Text */}
-            <div className="mt-2 text-sm text-gray-400">{tutorialStep} / 4</div>
-            <Button
-              variant="link"
-              className="text-gray-400"
-              onClick={() => onSkipTutorial()}
+              We&apos;re your no-nonsense coach. Your rut ends here. Let&apos;s
+              make a plan you can actually stick to.
+              <Button
+                className="mt-4 bg-blue-600 hover:bg-blue-700 text-white"
+                onClick={() => goToNextStep(tutorialStep)}
+              >
+                <FaArrowAltCircleRight size={256} />
+              </Button>
+            </motion.div>
+          )}
+          {tutorialStep === 2 && (
+            <motion.div
+              key="step2"
+              initial={{ opacity: 0, x: 100 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -100 }}
+              transition={{ duration: 0.3 }}
             >
-              Skip Tutorial
-            </Button>
+              Step 2
+              <Button
+                className="mt-4 bg-blue-600 hover:bg-blue-700 text-white"
+                onClick={() => goToNextStep(tutorialStep)}
+              >
+                Next
+              </Button>
+            </motion.div>
+          )}
+          {tutorialStep === 3 && (
+            <motion.div
+              key="step3"
+              initial={{ opacity: 0, x: 100 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -100 }}
+              transition={{ duration: 0.3 }}
+            >
+              Step 3
+              <Button
+                className="mt-4 bg-blue-600 hover:bg-blue-700 text-white"
+                onClick={() => goToNextStep(tutorialStep)}
+              >
+                Next
+              </Button>
+            </motion.div>
+          )}
+          {tutorialStep === 4 && (
+            <motion.div
+              key="step4"
+              initial={{ opacity: 0, x: 100 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -100 }}
+              transition={{ duration: 0.3 }}
+            >
+              Step 4
+              <Button
+                className="mt-4 bg-blue-600 hover:bg-blue-700 text-white"
+                onClick={() => goToNextStep(tutorialStep)}
+              >
+                Next
+              </Button>
+            </motion.div>
+          )}
+          <div className="flex justify-center gap-2 mt-4">
+            {[1, 2, 3, 4].map((step) => (
+              <div
+                key={step}
+                className={`w-2 h-2 rounded-full ${
+                  step === tutorialStep
+                    ? "bg-blue-600"
+                    : step < tutorialStep
+                    ? "bg-blue-400"
+                    : "bg-gray-300"
+                }`}
+              />
+            ))}
           </div>
+          <Button variant="link" className="text-gray-400" onClick={skipToEnd}>
+            Skip Tutorial
+          </Button>
         </>
       )}
       {skipTutorial && (
