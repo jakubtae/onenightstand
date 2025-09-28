@@ -66,6 +66,7 @@ export const ComebackPDF = ({
     page2: {
       flexDirection: "column",
       backgroundColor: colorScheme.background,
+      color: colorScheme.textPrimary,
       alignItems: "center",
       justifyContent: "center",
       fontFamily: "Helvetica",
@@ -81,6 +82,7 @@ export const ComebackPDF = ({
     page: {
       flexDirection: "column",
       backgroundColor: colorScheme.background,
+      color: colorScheme.textPrimary,
       padding: 30,
       fontFamily: "Helvetica",
     },
@@ -179,7 +181,7 @@ export const ComebackPDF = ({
                 y="0"
                 width="52"
                 height="52"
-                fill="#fff"
+                fill={colorScheme.background}
                 stroke={colorScheme.accent}
                 strokeWidth={4}
               />
@@ -311,7 +313,7 @@ export const ComebackPDF = ({
         <View
           style={{
             borderWidth: 1,
-            borderColor: "#000",
+            borderColor: colorScheme.textPrimary,
             padding: 15,
             minHeight: 80,
             marginBottom: 20,
@@ -327,7 +329,7 @@ export const ComebackPDF = ({
         <View
           style={{
             borderWidth: 1,
-            borderColor: "#000",
+            borderColor: colorScheme.textPrimary,
             padding: 15,
             minHeight: 60,
             marginBottom: 10,
@@ -338,7 +340,7 @@ export const ComebackPDF = ({
         <View
           style={{
             borderWidth: 1,
-            borderColor: "#000",
+            borderColor: colorScheme.textPrimary,
             padding: 15,
             minHeight: 60,
             marginBottom: 20,
