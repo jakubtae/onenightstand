@@ -64,6 +64,19 @@ export const QuestionnaireFlow = () => {
       rules: "",
     }
   );
+  // skipTutorial state in localStorage
+  const [skipTutorial, setSkipTutorial] = useState<boolean>(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("skipTutorial") === "true";
+    }
+    return false;
+  });
+  const handleSkipTutorial = () => {
+    setSkipTutorial(true);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("skipTutorial", "true");
+    }
+  };
 
   // React Hook Form setups
   const nameForm = useForm<NameFormData>({
@@ -139,7 +152,14 @@ export const QuestionnaireFlow = () => {
       <NavigationHeader step={step} goBack={goBack} />
 
       <AnimatePresence mode="wait">
-        {step === 1 && <Step1 form={nameForm} onSubmit={handleNameSubmit} />}
+        {step === 1 && (
+          <Step1
+            form={nameForm}
+            onSubmit={handleNameSubmit}
+            skipTutorial={skipTutorial}
+            onSkipTutorial={handleSkipTutorial}
+          />
+        )}
 
         {step === 2 && (
           <Step2
