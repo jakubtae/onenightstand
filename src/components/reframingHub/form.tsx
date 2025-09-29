@@ -22,7 +22,10 @@ import { Button } from "../ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 
 export const ReframingForm = () => {
-  const [selectedReframe, setSelectedReframe] = useState<any>(null);
+  type ReframeItem = (typeof ProblemsReframed)[number];
+  const [selectedReframe, setSelectedReframe] = useState<ReframeItem | null>(
+    null
+  );
   const previousQuickFixRef = useRef<string | null>(null);
   const problemName = [
     ...new Set(ProblemsReframed.map((problem) => problem.problem)),
@@ -77,7 +80,7 @@ export const ReframingForm = () => {
     // Clear the current reframe when select changes
     setSelectedReframe(null);
     previousQuickFixRef.current = null;
-    form.setValue("problem", value as any);
+    form.setValue("problem", value as ReframingFormData["problem"]);
   };
 
   return (
