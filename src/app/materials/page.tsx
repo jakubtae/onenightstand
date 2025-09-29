@@ -2,6 +2,7 @@
 import { MaterialContent } from "@/models/materials";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Link from "next/link";
 
 // Define categories based on your schema
 const categories = [
@@ -91,9 +92,10 @@ export default function Home() {
           {filteredMaterials.length > 0 ? (
             <div className="grid gap-4">
               {filteredMaterials.map((material: MaterialContent, i) => (
-                <div
+                <Link
                   key={i}
                   className="p-4 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow"
+                  href={`/materials/${material._id}`}
                 >
                   <h3 className="text-lg font-semibold text-gray-800">
                     {material.title}
@@ -115,7 +117,7 @@ export default function Home() {
                       {material.isCompleted ? "Completed" : "In Progress"}
                     </span>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           ) : (
