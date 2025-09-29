@@ -17,16 +17,13 @@ import {
   SelectValue,
   SelectTrigger,
 } from "../ui/select";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Button } from "../ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 
-// Infer the type of a single reframe item from ProblemsReframed
-type ReframeItem = (typeof ProblemsReframed)[number];
 export const ReframingForm = () => {
-  const [selectedReframe, setSelectedReframe] = useState<ReframeItem | null>(
-    null
-  );
+  const [selectedReframe, setSelectedReframe] = useState<any>(null);
+  const previousQuickFixRef = useRef<string | null>(null);
   const problemName = [
     ...new Set(ProblemsReframed.map((problem) => problem.problem)),
   ] as [string, ...string[]];
@@ -50,18 +47,37 @@ export const ReframingForm = () => {
     );
 
     if (matchingProblems.length > 0) {
-      const randomIndex = Math.floor(Math.random() * matchingProblems.length);
-      const randomReframe = matchingProblems[randomIndex];
+      let randomReframe;
+      let attempts = 0;
+      const maxAttempts = 10; // Prevent infinite loop
+
+      do {
+        const randomIndex = Math.floor(Math.random() * matchingProblems.length);
+        randomReframe = matchingProblems[randomIndex];
+        attempts++;
+
+        // If we've tried too many times, just use what we have
+        if (attempts >= maxAttempts) {
+          break;
+        }
+      } while (
+        matchingProblems.length > 1 &&
+        randomReframe.quickFix === previousQuickFixRef.current
+      );
+
       setSelectedReframe(randomReframe);
+      previousQuickFixRef.current = randomReframe.quickFix;
     } else {
       setSelectedReframe(null);
+      previousQuickFixRef.current = null;
     }
   };
 
   const handleSelectChange = (value: string) => {
     // Clear the current reframe when select changes
     setSelectedReframe(null);
-    form.setValue("problem", value as ReframingFormData["problem"]);
+    previousQuickFixRef.current = null;
+    form.setValue("problem", value as any);
   };
 
   return (
