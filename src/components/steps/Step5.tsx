@@ -3,7 +3,8 @@ import { Button } from "../ui/button";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { QuestionnaireData } from "../QuestionnaireFlow";
 import { ComebackPDF } from "@/lib/newpdf";
-
+import { Separator } from "../ui/separator";
+import Link from "next/link";
 interface Step5PlanProps {
   questionnaireData: QuestionnaireData;
   onRestart: () => void;
@@ -48,28 +49,43 @@ export const Step5 = ({ questionnaireData, onRestart }: Step5PlanProps) => {
             </ul>
           </div> */}
 
-          <Button
-            className="w-full py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium mt-4"
-            asChild
-          >
-            <PDFDownloadLink
-              document={<ComebackPDF QuestionnaireData={questionnaireData} />}
-              fileName={`${name}-comeback-plan.pdf`}
-              className="w-full flex justify-center items-center"
-            >
-              {({ loading }) =>
-                loading ? "Generating PDF..." : "Download Your Comeback Plan"
-              }
-            </PDFDownloadLink>
-          </Button>
-
-          <Button
-            variant="outline"
-            onClick={onRestart}
-            className="w-full py-3 rounded-lg border-gray-300 text-gray-700 mt-2"
-          >
-            Create Another Plan
-          </Button>
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-2 justify-center items-center">
+              <Button
+                className=" py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium mt-4"
+                asChild
+              >
+                <PDFDownloadLink
+                  document={
+                    <ComebackPDF QuestionnaireData={questionnaireData} />
+                  }
+                  fileName={`${name}-comeback-plan.pdf`}
+                  className="w-full flex justify-center items-center"
+                >
+                  {({ loading }) =>
+                    loading
+                      ? "Generating PDF..."
+                      : "Download Your Comeback Plan"
+                  }
+                </PDFDownloadLink>
+              </Button>
+              <Button
+                variant="outline"
+                onClick={onRestart}
+                className="w-full py-3 rounded-lg border-gray-300 text-gray-700 mt-2"
+              >
+                Create Another Plan
+              </Button>
+            </div>
+            <div className="flex flex-row gap-3 items-center justify-center">
+              <Separator className="flex-1" />
+              <span>or</span>
+              <Separator className="flex-1" />
+            </div>
+            <Button variant="accent" asChild className="w-full">
+              <Link href={"/profile"}>Continue in app</Link>
+            </Button>
+          </div>
         </div>
 
         {/* <div>
