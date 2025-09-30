@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Response } from "@/lib/response";
+import { Fix, Response } from "@/lib/response";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface Step4FixesProps {
@@ -57,9 +57,9 @@ export const Step4 = ({
               Quick Fixes:
             </h3>
             <ul className="list-disc list-inside space-y-2 text-gray-600 ml-2">
-              {selectedResponse.fixes.map((fix: string, index: number) => (
+              {selectedResponse.fixes.map((fix: Fix, index: number) => (
                 <li key={index} className="pl-2">
-                  {fix}
+                  {fix.text}
                 </li>
               ))}
             </ul>

@@ -170,7 +170,7 @@ export const ComebackPlanPDF = ({
         {selectedResponse &&
           selectedResponse.fixes.map((fix, index) => (
             <Text key={index} style={styles.fixItem}>
-              • {fix}
+              • {fix.text}
             </Text>
           ))}
       </View>

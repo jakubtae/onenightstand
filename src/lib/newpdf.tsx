@@ -196,7 +196,7 @@ export const ComebackPDF = ({
               }}
               wrap
             >
-              {fix}
+              {fix.text}
             </Text>
           </View>
           <Text
@@ -211,21 +211,29 @@ export const ComebackPDF = ({
           >
             {CheekyComments[i % CheekyComments.length]}
           </Text>
-          <Text
-            style={{
-              fontSize: 14,
-              marginTop: 15,
-              textAlign: "center",
-              color: colorScheme.textSecondary,
-              fontWeight: "light",
-            }}
-          >
-            Need ideas? Check out some tips in our{" "}
-            <Link href={guideLink} style={styles.link}>
-              guides & materials
-            </Link>
-            .
-          </Text>
+          {fix.relatedMaterials && fix.relatedMaterials.length > 0 && (
+            <Text
+              style={{
+                fontSize: 14,
+                marginTop: 15,
+                textAlign: "center",
+                color: colorScheme.textSecondary,
+                fontWeight: "light",
+              }}
+            >
+              Need ideas? Check out:
+              {"\n"}
+              {fix.relatedMaterials.map((id, idx) => (
+                <Link
+                  key={idx}
+                  href={`https://onenightstand-peach.vercel.app/materials/${id}`}
+                  style={styles.link}
+                >
+                  {` Resource ${idx + 1}`}
+                </Link>
+              ))}
+            </Text>
+          )}
         </Page>
       ))}
 

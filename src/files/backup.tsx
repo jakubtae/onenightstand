@@ -69,9 +69,18 @@ const exampleQuestionareData: QuestionnaireData = {
     question: "Lost in the sauce",
     text: "[Name], uncertainty is normal when life feels directionless. Even explorers like Magellan faced the unknown daily. The trick is to choose one small step forward, no matter how minor — a short walk, a call, or a tiny goal for the day. Momentum comes from starting, not from knowing the whole path.",
     fixes: [
-      "Identify one small priority for today — take that first step",
-      "List 3 possible options for progress, pick one randomly",
-      "Reflect on past wins — even tiny successes give direction",
+      {
+        text: "Write down one priority you can do today and do it first",
+        relatedMaterials: ["68db31b38d97dc8bd2068093"], // Goal Setting Framework (Guide)
+      },
+      {
+        text: "List 3 options for progress and pick one randomly",
+        relatedMaterials: ["68db31b38d97dc8bd2068097"], // Daring Greatly (Book)
+      },
+      {
+        text: "Write down 2 past wins to remind yourself you’ve done hard things before",
+        relatedMaterials: ["68db31b38d97dc8bd2068087"], // Atomic Habits (Book)
+      },
     ],
   },
 };
@@ -218,7 +227,7 @@ export const ComebackPlanPDF = ({
               }}
               wrap={true}
             >
-              {fix}
+              {fix.text}
             </Text>
           </View>
         </Page>
