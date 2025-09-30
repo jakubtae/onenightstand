@@ -1,11 +1,6 @@
+import { categoryList } from "@/lib/categoriesList";
 import mongoose, { Schema, Document } from "mongoose";
-const categoryList = [
-  "guide",
-  "worksheet",
-  "checklist",
-  "plan",
-  "link",
-] as const;
+
 export interface MaterialContent extends Document {
   title: string; // Title of the material
   description: string; // Short description

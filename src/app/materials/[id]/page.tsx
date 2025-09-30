@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 export default function MaterialPage() {
   const params = useParams();
@@ -17,7 +19,10 @@ export default function MaterialPage() {
     try {
       setLoading(true);
       setError(null);
-      const response = await axios.get(`/api/materials/${id}`);
+      const response = await axios.get(`/api/materials/${id}`, {
+        adapter: "fetch",
+        fetchOptions: { cache: "reload", next: { revalidate: 60 } },
+      });
       setMaterial(response.data.material);
       console.log(response.data.material);
     } catch (error) {
@@ -84,6 +89,9 @@ export default function MaterialPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+      <Button asChild variant="link" className="mb-6">
+        <Link href="/materials">← Back to Materials</Link>
+      </Button>
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="bg-white border border-gray-300 rounded-2xl p-6 mb-6">
@@ -116,22 +124,17 @@ export default function MaterialPage() {
               <h2 className="text-xl font-semibold text-gray-800 mb-4">
                 Resource File
               </h2>
-              <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                <div>
-                  <p className="font-medium text-gray-800">Download Resource</p>
-                  <p className="text-sm text-gray-600 mt-1">
-                    Click below to access the file
-                  </p>
-                </div>
+
+              <Button asChild variant="cta">
                 <Link
                   href={material.fileUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors w-full"
                 >
                   Open File
                 </Link>
-              </div>
+              </Button>
             </div>
           </div>
         </div>

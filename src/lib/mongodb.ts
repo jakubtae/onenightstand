@@ -58,7 +58,7 @@ if (!MONGODB_URI) {
 const connectDB = async () => {
   if (mongoose.connection.readyState >= 1) return;
   try {
-    await mongoose.connect(MONGODB_URI, { dbName: "todoApp" });
+    await mongoose.connect(MONGODB_URI, { dbName: "development" });
     console.log("MongoDB Connected");
   } catch (error) {
     console.error("MongoDB Connection Error:", error);
